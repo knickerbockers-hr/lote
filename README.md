@@ -1,17 +1,19 @@
 # Project Name
 
-The project description
+Lote
+
+Enables users to leave location-based notes for themselves or someone else.
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Ivana He
+- Edward Kim
+- Alana Turangan
+- Conor Wilson
 
 ## Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [https://trello.com/b/zaPDOGcy/product-roadmap]
 
 ## Contributing
 
