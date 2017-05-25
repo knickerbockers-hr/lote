@@ -3,5 +3,21 @@
     {
       "url": "heroku/node.js"
     }
-  ]
+  ],
+
+  "addons": [
+    "openredis",
+    {
+      "plan": "mongolab:shared-single-small",
+      "as": "MONGO"
+    },
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }
+  ],
+
+  "description": "A location-based note application."
 }
