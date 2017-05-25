@@ -6,11 +6,7 @@
   ],
 
   "addons": [
-    "openredis",
-    {
-      "plan": "mongolab:shared-single-small",
-      "as": "MONGO"
-    },
+    "openredis"
     {
       "plan": "heroku-postgresql",
       "options": {
