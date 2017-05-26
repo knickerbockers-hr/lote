@@ -10,7 +10,7 @@
     "start": "node index.js",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
-    "heroku-postbuild": "knex migrate:latest && webpack -d --config webpack.config.js"
+    "heroku-postbuild": "knex migrate:latest && webpack -d --config webpack.config.babel.js"
   },
   "author": "Hack Reactor",
   "license": "MIT",
