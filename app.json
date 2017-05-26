@@ -2,7 +2,7 @@
   "name": "lote-test-ckw",
   "buildpacks": [
     {
-      "url": "heroku/node.js"
+      "url": "heroku/nodejs"
     }
   ],
 
