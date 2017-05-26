@@ -1,4 +1,5 @@
 {
+  "name": "lote-test-ckw",
   "buildpacks": [
     {
       "url": "heroku/node.js"
@@ -8,7 +9,7 @@
   "addons": [
     "openredis"
     {
-      "plan": "heroku-postgresql",
+      "plan": "heroku-postgresql:hobby-dev",
       "options": {
         "version": "9.5"
       }
