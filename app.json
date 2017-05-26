@@ -1,14 +1,15 @@
 {
+  "name": "lote-app",
   "buildpacks": [
     {
-      "url": "heroku/node.js"
+      "url": "heroku/nodejs"
     }
   ],
 
   "addons": [
-    "openredis"
+    "heroku-redis",
     {
-      "plan": "heroku-postgresql",
+      "plan": "heroku-postgresql:hobby-dev",
       "options": {
         "version": "9.5"
       }
