@@ -7,7 +7,7 @@
   ],
 
   "addons": [
-    "openredis"
+    "heroku-redis",
     {
       "plan": "heroku-postgresql:hobby-dev",
       "options": {
