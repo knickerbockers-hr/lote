@@ -1,9 +1,13 @@
 {
   "name": "course.thesis",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=6.4.0"
+  },
   "scripts": {
-    "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
-    "start": "nodemon server",
+    "postinstall-dev": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
+    "start-dev": "nodemon server",
+    "start": "node server",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
@@ -16,6 +20,7 @@
     "body-parser": "^1.17.1",
     "bookshelf": "^0.10.3",
     "config": "^1.26.1",
+    "config-heroku": "^0.1.1-a",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.2.0",
     "cookie-parser": "^1.4.3",
