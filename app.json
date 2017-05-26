@@ -1,5 +1,5 @@
 {
-  "name": "lote-test-ckw",
+  "name": "lote-app",
   "buildpacks": [
     {
       "url": "heroku/nodejs"
