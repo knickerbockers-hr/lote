@@ -1,0 +1,6 @@
+{
+  "knex": {
+    "client": "pg",
+    "version": "9.5"
+  }
+}
