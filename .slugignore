@@ -1,0 +1,3 @@
+# Exclude native mobile specific files from Heroku
+/ios
+/android
