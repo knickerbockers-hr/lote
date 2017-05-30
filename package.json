@@ -8,6 +8,7 @@
     "postinstall-dev": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start-dev": "nodemon index.js",
     "start": "node index.js",
+    "start-native": "node node_modules/react-native/local-cli/cli.js start",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
     "heroku-postbuild": "knex migrate:latest && webpack -p --config webpack.config.babel.js"
@@ -48,6 +49,7 @@
     "pg": "^6.1.5",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-native": "^0.44.2",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
