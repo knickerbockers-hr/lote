@@ -1,3 +1,4 @@
+const env = require('dotenv').config();
 import webpack from 'webpack';
 import path from 'path';
 
@@ -21,7 +22,10 @@ const config = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.EnvironmentPlugin(['GOOGLE_MAPS_API_KEY'])
+  ]
 };
 
 export default config;
