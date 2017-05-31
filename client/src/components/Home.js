@@ -9,8 +9,8 @@ class Main extends React.Component {
         <p>My Int: {this.props.myInt}</p>
         <button onClick={this.props.increment}>Increment</button>
       </div>
-    )
+    );
   }
-};
+}
 
 export default Main;

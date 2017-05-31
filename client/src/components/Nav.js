@@ -12,8 +12,8 @@ class Nav extends React.Component {
         <a className="nav-btn" href="/profile">My Profile</a>
         <Link className="nav-btn" to="/random">Random</Link>
       </div>
-    )
+    );
   }
-};
+}
 
 export default Nav;

@@ -12,7 +12,7 @@ import Random from './Random';
 
 class Main extends React.Component {
   componentDidMount() {
-  	// console.log ('main component mounted');
+    // console.log ('main component mounted');
     const script = document.getElementById('bundleScript');
     // console.log ('script', JSON.parse(script.getAttribute('data-user')));
     var user = JSON.parse(script.getAttribute('data-user'));
@@ -33,8 +33,8 @@ class Main extends React.Component {
         </Switch>
         <Nav {...this.props} />
       </div>
-    )
+    );
   }
-};
+}
 
 export default Main;

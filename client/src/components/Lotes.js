@@ -9,8 +9,8 @@ class Lotes extends React.Component {
           return (<div key={i}>{lote.lote.message}</div>);
         })}
       </div>
-    )
+    );
   }
-};
+}
 
 export default Lotes;

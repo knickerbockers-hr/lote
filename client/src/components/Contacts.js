@@ -6,8 +6,8 @@ class Contacts extends React.Component {
       <div>
         <h1>Contacts</h1>
       </div>
-    )
+    );
   }
-};
+}
 
 export default Contacts;

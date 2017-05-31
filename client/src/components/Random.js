@@ -16,8 +16,8 @@ class Main extends React.Component {
         <Sub {...this.props} />
         {JSON.stringify(this.props)}
       </div>
-    )
+    );
   }
-};
+}
 
 export default Main;

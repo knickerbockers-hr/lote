@@ -6,8 +6,8 @@ class Sub extends React.Component {
       <div>
         Sub Component Test
       </div>
-    )
+    );
   }
-};
+}
 
 export default Sub;
