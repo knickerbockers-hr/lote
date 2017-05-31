@@ -7,13 +7,12 @@ class WrappedMap extends React.Component {
     super(props);
 
     this.state = {
-      currentLocation: {
-        lat: undefined,
-        lng: undefined
-      }
+      place: null,
+      position: null
     };
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.centerMoved = this.centerMoved.bind(this);
   }
 
   componentDidMount() {
@@ -21,10 +20,27 @@ class WrappedMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('Drooggg');
     const {google, map} = this.props;
     if (map !== prevProps.map) {
+      console.log('DRUGGG', this.props);
       this.renderAutoComplete();
+      map.addListener('drag', () => {
+        console.log('DRRRAG');
+        this.setState({
+          position: map.getCenter()
+        });
+      });
+      map.addListener('click', () => {
+        console.log('puss');
+      });
     }
+  }
+
+  centerMoved(mapProps, map) {
+
+    console.log(mapProps);
+    this.setState({position: map.getCenter()});
   }
 
   onSubmit(event) {
@@ -32,7 +48,7 @@ class WrappedMap extends React.Component {
   }
 
   renderAutoComplete() {
-    console.log('render: ', this);
+
     const {google, map} = this.props;
 
     if (!google || !map) { return; }
@@ -57,18 +73,23 @@ class WrappedMap extends React.Component {
 
       this.setState({
         place: place,
-        position: place.geometry.location
+        position: place.geometry.location,
       });
     });
   }
 
   render() {
+    const {position} = this.state;
+    const imgProps = Object.assign({}, this.props);
+    delete imgProps.map;
+    delete imgProps.google;
+    delete imgProps.mapCenter;
+
     if (!this.props.loaded) {
       return (
         <h1>LOADING</h1>
       );
     } else {
-      const {position} = this.state;
       return (
         <div>
           <form onSubmit={this.onSubmit}>
@@ -88,8 +109,18 @@ class WrappedMap extends React.Component {
               height: '100vh',
               width: '100%'
             }}
-            google={this.props.google}>
-            <Marker position={this.state.position} />
+            center={position}
+            onDrag={this.centerMoved}
+            //onDragend={this.centerMoved}
+            >
+            <img src={'../assets/google-logo.png'}></img>
+            <Marker
+              position={position}
+              //icon={{
+               // url: '../assets/google-logo.png'
+                //anchor: new google.maps.Point(103, 103)
+              //}}
+                />
             </Map>
         </div>
       );
@@ -99,9 +130,11 @@ class WrappedMap extends React.Component {
 }
 
 class MapWrapper extends React.Component {
+
   constructor(props) {
     super(props);
   }
+
   render() {
     const props = this.props;
     const {google} = this.props;
