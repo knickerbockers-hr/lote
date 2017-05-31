@@ -10,13 +10,10 @@ class WrappedMap extends React.Component {
       currentLocation: {
         lat: undefined,
         lng: undefined
-      },
-      loteCationForm: '',
-      loteCations: [],
+      }
     };
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.formInput = this.formInput.bind(this);
   }
 
   componentDidMount() {
@@ -34,14 +31,9 @@ class WrappedMap extends React.Component {
     event.preventDefault();
   }
 
-  formInput(input) {
-    this.setState({loteCationForm: event.target.value});
-  }
-
   renderAutoComplete() {
     console.log('render: ', this);
     const {google, map} = this.props;
-    //const {google} = this.props;
 
     if (!google || !map) { return; }
 
@@ -76,6 +68,7 @@ class WrappedMap extends React.Component {
         <h1>LOADING</h1>
       );
     } else {
+      const {position} = this.state;
       return (
         <div>
           <form onSubmit={this.onSubmit}>
@@ -87,16 +80,17 @@ class WrappedMap extends React.Component {
               // className={styles.button}
               type='submit'
               value='Go' />
-          </form>
+            <span> {position && position.lat()}, {position && position.lng()} </span>
+            </form>
           <Map {...this.props}
             containerStyle={{
               position: 'relative',
               height: '100vh',
               width: '100%'
             }}
-            google={this.props.google}
-            // <Listing places={this.state.loteCations} />
-            />
+            google={this.props.google}>
+            <Marker position={this.state.position} />
+            </Map>
         </div>
       );
     }
