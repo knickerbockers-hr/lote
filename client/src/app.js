@@ -1,4 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-ReactDOM.render(<h1>Hello World from React</h1>, document.getElementById('root'));
+import store from './store';
+import App from './components/App';
+import Main from './components/Main';
+
+const router = (
+  <Provider store={ store }>
+    <BrowserRouter>
+      <Route path='/' component={ App(Main) } />
+    </BrowserRouter>
+  </Provider>
+);
+
+ReactDOM.render(router, document.getElementById('root'));
