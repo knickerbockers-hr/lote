@@ -26,7 +26,7 @@ module.exports.getAll = (req, res) => {
 // };
 
 module.exports.getOne = (req, res) => {
-  models.Profile.where({ id: req.params.id }).fetch()
+  models.Profile.where({ id: req.params.profileId }).fetch()
     .then(profile => {
       if (!profile) {
         throw profile;
@@ -42,7 +42,7 @@ module.exports.getOne = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  models.Profile.where({ id: req.params.id }).fetch()
+  models.Profile.where({ id: req.params.profileId }).fetch()
     .then(profile => {
       if (!profile) {
         throw profile;
@@ -61,7 +61,7 @@ module.exports.update = (req, res) => {
 };
 
 // module.exports.deleteOne = (req, res) => {
-//   models.Profile.where({ id: req.params.id }).fetch()
+//   models.Profile.where({ id: req.params.profileId }).fetch()
 //     .then(profile => {
 //       if (!profile) {
 //         throw profile;

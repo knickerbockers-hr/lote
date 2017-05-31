@@ -1,6 +1,11 @@
-<% include head.ejs%>
+<% include head.ejs %>
 
-    <div id='root'></div>
-    <script src="/dist/bundle.js"></script>
+  <div id='root'></div>
+  <script id="bundleScript" src="/dist/bundle.js"
+    <% if (user.email) { %>
+      data-user="<%= JSON.stringify(user) %>"
+    <% } %>
+  >
+  </script>
 
-<% include foot.ejs%>
+<% include foot.ejs %>

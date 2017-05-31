@@ -1,0 +1,31 @@
+h1 {
+  color: green;
+}
+
+.nav {
+  position: fixed;
+  bottom: 10px;
+}
+
+.nav-btn {
+  background-color: white;
+  font-size: 12px;
+  border: 1px solid;
+  padding: 10px;
+}
+
+/*
+.lote-form {
+  width: 400px;
+  background-color: red;
+}
+
+label.lote-form-label {
+  width: 100%;
+  background-color: yellow;
+}
+
+.lote-form-input-message {
+  width: 100%;
+  background-color: pink;
+}*/

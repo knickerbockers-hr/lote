@@ -5,7 +5,10 @@ const router = express.Router();
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
-    res.render('index.ejs');
+    // res.render('index.ejs');
+    res.render('index.ejs', {
+      user: req.user // get the user out of session and pass to template
+    });
   });
 
 router.route('/login')
