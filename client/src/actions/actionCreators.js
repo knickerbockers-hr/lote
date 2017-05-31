@@ -8,14 +8,14 @@ export const increment = () => {
 
 export const loadingChanged = (isLoading) => {  
   return {
-    type: "IS_LOADING",
+    type: 'IS_LOADING',
     isLoading
   };
 };
 
 export const addLotesToStore = (lotes) => {  
   return {
-    type: "ADD_LOTES",
+    type: 'ADD_LOTES',
     lotes
   };
 };
@@ -34,7 +34,7 @@ export const getLotes = (userId) => {
           console.log (res);
           return res.data;
         }
-        throw "request failed";
+        throw 'request failed';
       })
       .then(function (lotes) {
         console.log ('received lotes', lotes);
@@ -48,7 +48,7 @@ export const getLotes = (userId) => {
 
 export const setProfile = (profile) => {
   return {
-    type: "SET_PROFILE",
+    type: 'SET_PROFILE',
     profile
   };
 };
