@@ -20,26 +20,19 @@ class WrappedMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('Drooggg');
     const {google, map} = this.props;
     if (map !== prevProps.map) {
-      console.log('DRUGGG', this.props);
       this.renderAutoComplete();
-      map.addListener('drag', () => {
-        console.log('DRRRAG');
-        this.setState({
-          position: map.getCenter()
-        });
-      });
-      map.addListener('click', () => {
-        console.log('puss');
-      });
+      // Doesn't work, map not exposed properly?
+      // map.addListener('drag', () => {
+      //   this.setState({
+      //     position: map.getCenter()
+      //   });
+      // });
     }
   }
 
   centerMoved(mapProps, map) {
-
-    console.log(mapProps);
     this.setState({position: map.getCenter()});
   }
 
@@ -73,55 +66,71 @@ class WrappedMap extends React.Component {
 
       this.setState({
         place: place,
-        position: place.geometry.location,
+        position: place.geometry.location
       });
     });
   }
 
   render() {
     const {position} = this.state;
-    const imgProps = Object.assign({}, this.props);
-    delete imgProps.map;
-    delete imgProps.google;
-    delete imgProps.mapCenter;
+
 
     if (!this.props.loaded) {
       return (
-        <h1>LOADING</h1>
-      );
-    } else {
-      return (
-        <div>
-          <form onSubmit={this.onSubmit}>
+        <div className="container-fluid">
+          <form>
             <input
-              ref='autocomplete'
               type="text"
               placeholder="Enter a location" />
             <input
               // className={styles.button}
-              type='submit'
-              value='Go' />
+              type="submit"
+              value="Go" />
+            </form>
+          <div
+            style={{
+              position: 'relative',
+              height: '80vh',
+              width: '100%',
+              'backgroundColor': '#eaeaea'
+            }}>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="container-fluid">
+          <form onSubmit={this.onSubmit}>
+            <input
+              ref="autocomplete"
+              type="text"
+              placeholder="Enter a location" />
+            <input
+              // className={styles.button}
+              type="submit"
+              value="Go" />
             <span> {position && position.lat()}, {position && position.lng()} </span>
             </form>
           <Map {...this.props}
             containerStyle={{
-              position: 'relative',
-              height: '100vh',
+              position: 'absolute',
+              height: '100%',
               width: '100%'
             }}
             center={position}
+            // onDrag requires adding drag to google-maps-react
             onDrag={this.centerMoved}
             //onDragend={this.centerMoved}
             >
-            <img src={'../assets/google-logo.png'}></img>
-            <Marker
-              position={position}
-              //icon={{
-               // url: '../assets/google-logo.png'
-                //anchor: new google.maps.Point(103, 103)
-              //}}
-                />
             </Map>
+            <img style={{
+              //display: 'none',
+              position: 'relative',
+              top: '40vh',
+              left: '50%',
+              transform: 'translate(-50%, -100%)'
+            }}
+              src={'../assets/location-icon.png'}></img>
         </div>
       );
     }
@@ -142,7 +151,11 @@ class MapWrapper extends React.Component {
     return (
       <Map google={google}
           className={'map'}
-          visible={false}>
+          visible={false}
+          containerStyle={{
+            height: '80vh',
+            width: '80%'
+          }}>
             <WrappedMap {...props} />
       </Map>
     );
