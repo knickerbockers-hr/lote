@@ -5,7 +5,7 @@ import rootReducer from './reducers/index';
 
 var defaultState = {
   profile: {},
-  lotes: ['lote1', 'lote2'],
+  lotes: [{lote: {message: 'hello'}}],
   myInt: 100
 }; // we need a reducer for each state
 
