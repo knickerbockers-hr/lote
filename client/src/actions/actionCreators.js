@@ -92,6 +92,15 @@ export const updateLotecation = (location) => {
     payload: location
   };
 };
+
+export const selectContact = (contact) => {
+  console.log('You clicked on contact: ', contact.name);
+  return {
+    type: 'CONTACT_SELECTED', 
+    contact
+  };
+};
+
 // export const addLote = (lote) => {
 //   return {
 //     type: 'ADD_LOTE',
