@@ -14,20 +14,16 @@ class Contacts extends React.Component {
     this.state = {
       contacts: []
     };
-    this.onUpdateInput = this.onUpdateInput.bind(this);
-    this.search = this.search.bind(this); 
+    this.addContact = this.addContact.bind(this); 
   }
 
-  onUpdateInput(e) {
+  addContact(input) {
+    let contacts = this.state.contacts.slice();
+    contacts.push(input); 
+    
     this.setState({
-      input: e.target.value
+      contacts: contacts
     });
-  }
-
-  search() {
-    //add to dom
-    //call on search method from higher level 
-    console.log('INPUT', this.state.input);
   }
 
   render() {
@@ -36,13 +32,14 @@ class Contacts extends React.Component {
         <h1>Contacts</h1>
         <NewContact
           input={ this.state.input }
-        />
-        <List
-          search={ this.search }
+          addContact={ this.addContact }
         />
         <ContactDetail
           //input={ this.state.input }
           search={ this.search }
+        />
+         <List
+          contacts={ this.state.contacts }
         />
       </div>
     );
