@@ -14,8 +14,33 @@ module.exports.getAll = (req, res) => {
 
 module.exports.getAllForProfile = (req, res) => {
   console.log ('getting all lotes for profile', req.params.profileId);
-  models.Lote.Lote_Sent.where({ sender_id: req.params.profileId }).fetchAll({withRelated: ['lotesReceived', 'lote']})
+
+  // ALL lotes with lotesReceived information only if receiver is the logged-in user (this is an atypical use-case)
+  // models.Lote.Lote_Sent.fetchAll({withRelated: [ {'lotesReceived': (qb) => qb.where('receiver_id', req.params.profileId) }, 'lote']}) 
+
+  // ALL lotes sent by logged-in user
+  // models.Lote.Lote_Sent.where({ sender_id: req.params.profileId }).fetchAll({withRelated: ['lotesReceived', 'lote']})
+
+  // ALL lotes received by logged-in user
+  // models.Lote.Lote_Sent // ALL lotes sent OR received by logged-in user
+  //   .query('join', 'lotes_received', 'lotes_sent.id', 'lotes_received.lotes_sent_id')
+  //   .where({ 'lotes_received.receiver_id': req.params.profileId })
+  //   .fetchAll({withRelated: ['lotesReceived', 'lote']})
+
+  // ONLY lotes sent AND received by the same logged-in user
+  // models.Lote.Lote_Sent
+  //   .query('join', 'lotes_received', 'lotes_sent.id', 'lotes_received.lotes_sent_id')
+  //   .where({ 'lotes_sent.sender_id': req.params.profileId, 'lotes_received.receiver_id': req.params.profileId })
+  //   .fetchAll({ withRelated: ['lotesReceived', 'lote'] })
+
+  // ALL lotes sent OR received by logged-in user
+  models.Lote.Lote_Sent
+    .query('join', 'lotes_received', 'lotes_sent.id', 'lotes_received.lotes_sent_id')
+    .query({ where: { 'lotes_sent.sender_id': req.params.profileId }, orWhere: { 'lotes_received.receiver_id': req.params.profileId }, orderBy: 'id' })
+    .fetchAll({withRelated: ['lotesReceived', 'lote']})
+
     .then(lotes => {
+      console.log ('lotes', lotes);
       res.status(200).send(lotes);
     })
     .catch(err => {
