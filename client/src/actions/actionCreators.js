@@ -6,19 +6,20 @@ export const increment = () => {
   };
 };
 
-export const loadingChanged = (isLoading) => {  
+export const loadingChanged = (isLoading) => {
   return {
     type: 'IS_LOADING',
     isLoading
   };
 };
 
-export const addLotesToStore = (lotes) => {  
+export const addLotesToStore = (lotes) => {
   return {
     type: 'ADD_LOTES',
     lotes
   };
 };
+
 
 export const getLotes = (userId) => {
   console.log ('getting lotes');
@@ -53,6 +54,12 @@ export const setProfile = (profile) => {
   };
 };
 
+export const updateLotecation = (location) => {
+  return {
+    type: 'UPDATE_LOTECATION',
+    payload: location
+  };
+};
 // export const addLote = (lote) => {
 //   return {
 //     type: 'ADD_LOTE',

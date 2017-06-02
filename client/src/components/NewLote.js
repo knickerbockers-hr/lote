@@ -5,9 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-
-
-
+import MapContainer from './MapContainer';
 
 class NewLote extends React.Component {
 
@@ -96,6 +94,7 @@ class NewLote extends React.Component {
               <RaisedButton primary={true} label="Submit" onTouchTap={this.handleSubmit}></RaisedButton>
             </div>
           </form>
+          <MapContainer {...this.props}/>
       </div>
     );
   }
