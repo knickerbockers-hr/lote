@@ -9,7 +9,7 @@ import Lotes from './Lotes';
 import NewLote from './NewLote';
 import Lote from './Lote';
 import Random from './Random';
-import MapContainer from './MapContainer.jsx';
+//import MapContainer from './MapContainer.jsx';
 
 class Main extends React.Component {
 
@@ -29,8 +29,8 @@ class Main extends React.Component {
     const script = document.getElementById('bundleScript');
     // console.log ('script', JSON.parse(script.getAttribute('data-user')));
     var user = JSON.parse(script.getAttribute('data-user'));
-    this.props.setProfile(user);
-    this.props.getLotes(user.id);
+    //this.props.setProfile(user);
+    //this.props.getLotes(user.id);
   }
 
   render() {

@@ -19,14 +19,8 @@ class WrappedMap extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {google, map} = this.props;
-    console.log(this.props);
     if (map !== prevProps.map) {
-      console.log('add listener');
       this.renderAutoComplete();
-      //Doesn't work, map not exposed properly?
-      map.addListener('mouseover', () => {
-        console.log('HIYA');
-      });
     }
   }
 
@@ -71,7 +65,6 @@ class WrappedMap extends React.Component {
 
   render() {
     const lotecation = this.props.lotecation;
-    console.log(lotecation.lat(), ': ', lotecation.lng());
 
 
     if (!this.props.loaded) {

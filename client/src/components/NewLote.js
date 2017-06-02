@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import MapContainer from './MapContainer';
 
 class NewLote extends React.Component {
 
@@ -74,6 +75,7 @@ class NewLote extends React.Component {
             </div>
             <input type="submit" value="Submit" />
           </form>
+          <MapContainer {...this.props}/>
       </div>
     );
   }
