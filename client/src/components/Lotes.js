@@ -6,7 +6,7 @@ class Lotes extends React.Component {
       <div>
         <h1>Lotes</h1>
         {this.props.lotes.map((lote, i) => {
-          return (<div key={i}>{lote.id} - {lote.lote.message}</div>);
+          return (<div key={lote.id}>{lote.id} - {lote.lote.message}</div>);
         })}
       </div>
     );
