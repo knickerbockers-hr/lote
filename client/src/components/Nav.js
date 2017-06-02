@@ -9,7 +9,6 @@ class Nav extends React.Component {
         <Link className="nav-btn" to="/contacts">Contacts</Link>
         <Link className="nav-btn" to="/lotes">Lotes</Link>
         <Link className="nav-btn" to="/lotes/new">New Lote</Link>
-        <a className="nav-btn" href="/profile">My Profile</a>
         <Link className="nav-btn" to="/random">Random</Link>
       </div>
     );
