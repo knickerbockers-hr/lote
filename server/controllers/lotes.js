@@ -15,8 +15,9 @@ module.exports.getAll = (req, res) => {
 module.exports.getAllForProfile = (req, res) => {
   console.log ('getting all lotes for profile', req.params.profileId);
 
+
   // ALL lotes with lotesReceived information only if receiver is the logged-in user (this is an atypical use-case)
-  // models.Lote.Lote_Sent.fetchAll({withRelated: [ {'lotesReceived': (qb) => qb.where('receiver_id', req.params.profileId) }, 'lote']}) 
+  // models.Lote.Lote_Sent.fetchAll({withRelated: [ {'lotesReceived': (qb) => qb.where('receiver_id', req.params.profileId) }, 'lote']})
 
   // ALL lotes sent by logged-in user
   // models.Lote.Lote_Sent.where({ sender_id: req.params.profileId }).fetchAll({withRelated: ['lotesReceived', 'lote']})
@@ -50,6 +51,7 @@ module.exports.getAllForProfile = (req, res) => {
     });
 };
 
+
 module.exports.create = (req, res) => {
   if (req.body.loteType === 'lotes_text') {
     models.Lote.Lote_Text.forge({ message: req.body.message })
@@ -63,7 +65,8 @@ module.exports.create = (req, res) => {
           .forge({
             sender_id: req.body.senderId,
             lote_type: req.body.loteType,
-            lote_id: result.id
+            lote_id: result.id,
+            lock: req.body.lock
           })
           .save();
       })
