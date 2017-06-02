@@ -6,11 +6,9 @@ class WrappedMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      place: null,
-      position: null
-    };
-
+    this.autocomplete = {getPlace: () => {
+      console.log('Autocomplete not loaded');
+    }};
     this.onSubmit = this.onSubmit.bind(this);
     this.centerMoved = this.centerMoved.bind(this);
   }
@@ -20,27 +18,14 @@ class WrappedMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('Drooggg');
     const {google, map} = this.props;
     if (map !== prevProps.map) {
-      console.log('DRUGGG', this.props);
       this.renderAutoComplete();
-      map.addListener('drag', () => {
-        console.log('DRRRAG');
-        this.setState({
-          position: map.getCenter()
-        });
-      });
-      map.addListener('click', () => {
-        console.log('puss');
-      });
     }
   }
 
   centerMoved(mapProps, map) {
-
-    console.log(mapProps);
-    this.setState({position: map.getCenter()});
+    this.props.updateLotecation(map.getCenter());
   }
 
   onSubmit(event) {
@@ -71,57 +56,72 @@ class WrappedMap extends React.Component {
         map.setZoom(17);
       }
 
-      this.setState({
-        place: place,
-        position: place.geometry.location,
-      });
+      let {lat, lng} = place.geometry.location;
+      this.props.updateLotecation(place.geometry.location);
     });
+
+    this.autocomplete = autocomplete;
   }
 
   render() {
-    const {position} = this.state;
-    const imgProps = Object.assign({}, this.props);
-    delete imgProps.map;
-    delete imgProps.google;
-    delete imgProps.mapCenter;
+    const lotecation = this.props.lotecation;
+
 
     if (!this.props.loaded) {
       return (
-        <h1>LOADING</h1>
+        <div className="container-fluid">
+          <form>
+            <input
+              type="text"
+              ref="autocomplete"
+              placeholder="Enter a location" />
+            <input
+              // className={styles.button}
+              type="submit"
+              value="Go" />
+            </form>
+          <div
+            style={{
+              position: 'relative',
+              height: '80vh',
+              width: '100%',
+              'backgroundColor': '#eaeaea'
+            }}>
+          </div>
+        </div>
       );
     } else {
       return (
-        <div>
+        <div className="container-fluid">
           <form onSubmit={this.onSubmit}>
             <input
-              ref='autocomplete'
+              ref="autocomplete"
               type="text"
               placeholder="Enter a location" />
             <input
               // className={styles.button}
-              type='submit'
-              value='Go' />
-            <span> {position && position.lat()}, {position && position.lng()} </span>
+              type="submit"
+              value="Go" />
+            <span> {lotecation.lat()}, {lotecation.lng()} </span>
             </form>
           <Map {...this.props}
             containerStyle={{
-              position: 'relative',
-              height: '100vh',
+              position: 'absolute',
+              height: '100%',
               width: '100%'
             }}
-            center={position}
-            onDrag={this.centerMoved}
-            //onDragend={this.centerMoved}
-            >
-            <img src={'../assets/google-logo.png'}></img>
-            <Marker
-              position={position}
-              //icon={{
-               // url: '../assets/google-logo.png'
-                //anchor: new google.maps.Point(103, 103)
-              //}}
-                />
-            </Map>
+            center={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
+            initialCenter={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
+            onDragend={this.centerMoved}
+          >
+          </Map>
+          <img style={{
+            position: 'relative',
+            top: '40vh',
+            left: '50%',
+            transform: 'translate(-50%, -100%)'
+          }}
+            src={'../assets/location-icon.png'}></img>
         </div>
       );
     }
@@ -142,7 +142,11 @@ class MapWrapper extends React.Component {
     return (
       <Map google={google}
           className={'map'}
-          visible={false}>
+          visible={false}
+          containerStyle={{
+            height: '80vh',
+            width: '80%'
+          }}>
             <WrappedMap {...props} />
       </Map>
     );
