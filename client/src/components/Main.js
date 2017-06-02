@@ -11,7 +11,7 @@ import Lote from './Lote';
 import Random from './Random';
 
 class Main extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     // console.log ('main component mounted');
     const script = document.getElementById('bundleScript');
     // console.log ('script', JSON.parse(script.getAttribute('data-user')));
