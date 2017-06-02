@@ -6,7 +6,7 @@ import rootReducer from './reducers/index';
 
 var defaultState = {
   profile: {},
-  lotes: [{lote: {message: 'hello'}}],
+  lotes: [],
   myInt: 100
 };
 
