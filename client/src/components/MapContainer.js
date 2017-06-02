@@ -138,7 +138,6 @@ class MapWrapper extends React.Component {
   render() {
     const props = this.props;
     const {google} = this.props;
-    console.log('wrapperRender');
 
     return (
       <Map google={google}
