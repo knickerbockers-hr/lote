@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/actionCreators';
 import Main from './Main';
 
+var injectTapEventPlugin = require('react-tap-event-plugin');
+injectTapEventPlugin();
+
 const mapStateToProps = (state) => {
   return {
     profile: state.profile,
