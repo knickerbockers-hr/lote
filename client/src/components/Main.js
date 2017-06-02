@@ -9,10 +9,11 @@ import Lotes from './Lotes';
 import NewLote from './NewLote';
 import Lote from './Lote';
 import Random from './Random';
+import MapContainer from './MapContainer.jsx';
 
 class Main extends React.Component {
 
-  constructor(props) {    
+  constructor(props) {
     super(props);
 
     this.Home = () => <Home {...this.props} />;

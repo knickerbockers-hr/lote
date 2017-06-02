@@ -6,11 +6,9 @@ class WrappedMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      place: null,
-      position: null
-    };
-
+    this.autocomplete = {getPlace: () => {
+      console.log('Autocomplete not loaded');
+    }};
     this.onSubmit = this.onSubmit.bind(this);
     this.centerMoved = this.centerMoved.bind(this);
   }
@@ -21,19 +19,19 @@ class WrappedMap extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {google, map} = this.props;
+    console.log(this.props);
     if (map !== prevProps.map) {
+      console.log('add listener');
       this.renderAutoComplete();
-      // Doesn't work, map not exposed properly?
-      // map.addListener('drag', () => {
-      //   this.setState({
-      //     position: map.getCenter()
-      //   });
-      // });
+      //Doesn't work, map not exposed properly?
+      map.addListener('mouseover', () => {
+        console.log('HIYA');
+      });
     }
   }
 
   centerMoved(mapProps, map) {
-    this.setState({position: map.getCenter()});
+    this.props.updateLotecation(map.getCenter());
   }
 
   onSubmit(event) {
@@ -64,15 +62,16 @@ class WrappedMap extends React.Component {
         map.setZoom(17);
       }
 
-      this.setState({
-        place: place,
-        position: place.geometry.location
-      });
+      let {lat, lng} = place.geometry.location;
+      this.props.updateLotecation(place.geometry.location);
     });
+
+    this.autocomplete = autocomplete;
   }
 
   render() {
-    const {position} = this.state;
+    const lotecation = this.props.lotecation;
+    console.log(lotecation.lat(), ': ', lotecation.lng());
 
 
     if (!this.props.loaded) {
@@ -81,6 +80,7 @@ class WrappedMap extends React.Component {
           <form>
             <input
               type="text"
+              ref="autocomplete"
               placeholder="Enter a location" />
             <input
               // className={styles.button}
@@ -109,7 +109,7 @@ class WrappedMap extends React.Component {
               // className={styles.button}
               type="submit"
               value="Go" />
-            <span> {position && position.lat()}, {position && position.lng()} </span>
+            <span> {lotecation.lat()}, {lotecation.lng()} </span>
             </form>
           <Map {...this.props}
             containerStyle={{
@@ -117,20 +117,18 @@ class WrappedMap extends React.Component {
               height: '100%',
               width: '100%'
             }}
-            center={position}
-            // onDrag requires adding drag to google-maps-react
-            onDrag={this.centerMoved}
-            //onDragend={this.centerMoved}
-            >
-            </Map>
-            <img style={{
-              //display: 'none',
-              position: 'relative',
-              top: '40vh',
-              left: '50%',
-              transform: 'translate(-50%, -100%)'
-            }}
-              src={'../assets/location-icon.png'}></img>
+            center={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
+            initialCenter={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
+            onDragend={this.centerMoved}
+          >
+          </Map>
+          <img style={{
+            position: 'relative',
+            top: '40vh',
+            left: '50%',
+            transform: 'translate(-50%, -100%)'
+          }}
+            src={'../assets/location-icon.png'}></img>
         </div>
       );
     }
@@ -147,6 +145,7 @@ class MapWrapper extends React.Component {
   render() {
     const props = this.props;
     const {google} = this.props;
+    console.log('wrapperRender');
 
     return (
       <Map google={google}
