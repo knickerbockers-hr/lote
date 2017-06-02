@@ -1,5 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+import TextField from 'material-ui/TextField';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import RaisedButton from 'material-ui/RaisedButton';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
 
 class NewLote extends React.Component {
@@ -7,10 +12,16 @@ class NewLote extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lock: ''
+      lock: '',
+      value: 1
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changeLockStatus = this.changeLockStatus.bind(this);
+    this.handleDiffRecepient = this.handleDiffRecepient.bind(this);
+  }
+
+  handleDiffRecepient (event, index, value) {
+    this.setState({value});
   }
 
   changeLockStatus(e) {
@@ -40,8 +51,15 @@ class NewLote extends React.Component {
 
   render() {
     return (
+
       <div>
         <h1>New Lote</h1>
+        <DropDownMenu value={this.state.value} onChange={this.handleDiffRecepient} openImmediately={false}>
+          <MenuItem value={1} primaryText="Self"/>
+          <MenuItem value={2} primaryText="Ed"/>
+          <MenuItem value={3} primaryText="Alana"/>
+          <MenuItem value={4} primaryText="Connor"/>
+        </DropDownMenu>
           <form className="lote-form" ref="loteForm" onSubmit={this.handleSubmit}>
             <div>
               <label className="lote-form-label">
@@ -51,8 +69,7 @@ class NewLote extends React.Component {
             </div>
             <div>
               <label className="lote-form-label">
-                Message:
-                <input className="lote-form-input-message" ref="message" type="text" name="message" />
+                <TextField floatingLabelText="Message" className="lote-form-input-message" ref="message" type="text" name="message" />
               </label>
             </div>
             <div className="radio">
@@ -73,7 +90,9 @@ class NewLote extends React.Component {
                 Trapped
               </label>
             </div>
-            <input type="submit" value="Submit" />
+            <div>
+              <RaisedButton primary={true} label="Submit" onTouchTap={this.handleSubmit}></RaisedButton>
+            </div>
           </form>
           <MapContainer {...this.props}/>
       </div>
