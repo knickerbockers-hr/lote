@@ -1,5 +1,5 @@
 {
-  "name": "course.thesis",
+  "name": "lote",
   "version": "1.0.0",
   "engines": {
     "node": ">=6.4.0"
@@ -12,13 +12,14 @@
     "build": "webpack --watch",
     "heroku-postbuild": "knex migrate:latest && webpack -p --config webpack.config.babel.js"
   },
-  "author": "Hack Reactor",
+  "author": "Alana Turangan, Connor Wilson, Edward Kim, Ivana He",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.23.0",
     "bcrypt-nodejs": "^0.0.3",
