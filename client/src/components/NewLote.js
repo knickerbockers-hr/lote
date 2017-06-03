@@ -86,7 +86,6 @@ class NewLote extends React.Component {
               <RaisedButton labelColor='white' backgroundColor='#0740C3' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
-
           <MapContainer {...this.props} />
         </Card>
       </div>
