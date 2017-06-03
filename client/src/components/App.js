@@ -10,8 +10,9 @@ const mapStateToProps = (state) => {
   return {
     profile: state.profile,
     lotes: state.lotes,
+    contacts: state.contacts,
+    lotecation: state.lotecation,
     myInt: state.myInt,
-    lotecation: state.lotecation
   };
 };
 
