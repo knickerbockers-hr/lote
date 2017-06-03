@@ -31,12 +31,13 @@ class Main extends React.Component {
     var user = JSON.parse(script.getAttribute('data-user'));
     this.props.setProfile(user);
     this.props.getLotes(user.id);
+    this.props.getContacts(user.id);
   }
 
   render() {
     return (
       <div>
-      <Nav />
+        <Nav />
         <Switch>
           <Route exact path='/' render={ this.Home } />
           <Route exact path='/contacts' render={ this.Contacts } />
@@ -45,7 +46,6 @@ class Main extends React.Component {
           <Route exact path='/lotes/:loteId' render={ this.Lote } />
           <Route exact path='/random' render={ this.Random } />
         </Switch>
-
       </div>
     );
   }
