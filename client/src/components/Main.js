@@ -36,6 +36,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
+      <Nav />
         <Switch>
           <Route exact path='/' render={ this.Home } />
           <Route exact path='/contacts' render={ this.Contacts } />
@@ -44,7 +45,7 @@ class Main extends React.Component {
           <Route exact path='/lotes/:loteId' render={ this.Lote } />
           <Route exact path='/random' render={ this.Random } />
         </Switch>
-        <Nav />
+
       </div>
     );
   }
