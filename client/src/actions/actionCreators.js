@@ -93,11 +93,51 @@ export const updateLotecation = (location) => {
   };
 };
 
-export const selectContact = (contact) => {
+export const selectContact = (activeContact) => {
   console.log('You clicked on contact: ', contact.name);
   return {
     type: 'CONTACT_SELECTED', 
-    contact
+    //need to add details for what to return for active contact
+    activeContact
+  };
+};
+
+export const addContact = (addContacts) => {
+  return {
+    type: 'ADD_CONTACT', 
+    addContacts
+  };
+};
+
+export const contactList = (contacts) => {
+  return {
+    type: 'CONTACTS_LIST', 
+    contacts: contacts
+  };
+};
+
+export const getContacts = (contacts) => {
+  return function(dispatch, getState) {
+    var state = getState();
+    dispatch(loadingChanged(true));
+
+    return axios.get(`/api/profiles/${userId}/contacts`)
+      .then(function (res) {
+        dispatch(loadingChanged(false));
+
+        if (res.status === 200) {
+          console.log (res);
+          return res.data;
+        }
+        throw 'request failed';
+      })
+      .then(function (contacts) {
+        console.log ('received contacts', contacts);
+        dispatch(addContact(contacts));
+      })
+      .catch(function (err) {
+        console.log (err);
+      });
   };
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { connect } from 'react-redux'; 
 import { bindActionCreators } from 'redux'; 
 import { search, selectContact } from '../actions'; 
@@ -11,19 +11,23 @@ import styles from '../css/styles';
 class Contacts extends React.Component {
   constructor(props) {
     super(props); 
-    this.state = {
-      contacts: []
-    };
+    // this.state = {
+    //   contacts: []
+    // };
     this.addContact = this.addContact.bind(this); 
   }
 
   addContact(input) {
-    let contacts = this.state.contacts.slice();
-    contacts.push(input); 
+    //no props for add contact 
+    { console.log('IN ADD CONTACT', this.props); }
+    let contacts = this.props.contacts.slice(); 
+    //let contacts = this.state.contacts.slice();
+    contacts.push(input);
+    dispatch(contactList(contacts)); 
     
-    this.setState({
-      contacts: contacts
-    });
+    // this.setState({
+    //   contacts: contacts
+    // });
   }
 
   render() {
@@ -31,19 +35,30 @@ class Contacts extends React.Component {
       <div>
         <h1>Contacts</h1>
         <NewContact
-          input={ this.state.input }
+          //input={ this.state.input }
           addContact={ this.addContact }
         />
         <ContactDetail
           //input={ this.state.input }
-          search={ this.search }
+          // search={ this.search }
         />
          <List
-          contacts={ this.state.contacts }
+          contacts={ this.props.contacts }
         />
       </div>
     );
   }
 }
 
-export default Contacts;
+let mapStateToProps = (state) => {
+  return {
+    contacts: state.contacts
+  };
+}; 
+
+let mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ selectContact: selectContact }, dispatch); 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts); 
+//export default Contacts;
