@@ -6,38 +6,47 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
-import { Card, CardMedia } from 'material-ui/Card';
+import Card from 'material-ui/Card';
+import Checkbox from 'material-ui/Checkbox';
 
 class NewLote extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      lock: '',
-      value: 0
+      lock: false,
+      receiverId: 0,
+      message: ''
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeLockStatus = this.changeLockStatus.bind(this);
-    this.handleDiffRecepient = this.handleDiffRecepient.bind(this);
+    this.handleLockToggle = this.handleLockToggle.bind(this);
+    this.handleRecipientChange = this.handleRecipientChange.bind(this);
+    this.handleMessageChange = this.handleMessageChange.bind(this);
   }
 
-  handleDiffRecepient (event, index, value) {
-    this.setState({value});
+  handleRecipientChange (event, index, receiverId) {
+    this.setState({ receiverId });
   }
 
-  changeLockStatus(e) {
-    this.setState({
-      lock: e.target.value
-    });
+  handleMessageChange (event) {
+    this.setState({ message: event.target.value });
+  }
+
+  handleLockToggle(event, checked) {
+    this.setState({ lock: checked });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+
+    console.log ('receiver id', this.refs.receiver.props.value);
     axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
       senderId: this.props.profile.id,
-      receiverId: this.props.profile.id,
+      receiverId: this.refs.receiver.props.value,
       loteType: 'lotes_text',
-      message: this.refs.message.value,
+      message: this.state.message,
       lock: this.state.lock
     })
     .then((res) => {
@@ -47,63 +56,38 @@ class NewLote extends React.Component {
       console.log (err);
     });
 
-    this.refs.loteForm.reset();
+    this.setState({ message: '' });
   }
 
   render() {
     return (
-
       <div className='newLoteContainer'>
         <h1>New Lote</h1>
         <Card>
-          <CardMedia>
-          <img src="https://images.unsplash.com/photo-1478809846154-d4ca173df3e0?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=slava-bowman-161206.jpg&s=9a7bc690d600510a68e231a1ac0b472b" width="20%" height="20%"/>
-          </CardMedia>
-
-          <DropDownMenu value={this.state.value} onChange={this.handleDiffRecepient} openImmediately={false}>
-            <MenuItem value={0} primaryText="Self"/>
+          <DropDownMenu ref="receiver" value={ this.state.receiverId ? this.state.receiverId : this.props.profile.id } onChange={ this.handleRecipientChange } openImmediately={ false }>
+            <MenuItem value={ this.props.profile.id } primaryText="Self"/>
             {this.props.contacts.map((contact, i) => {
               return (
-                <MenuItem key={i + 1} value={i + 1} primaryText={ contact }/>
+                contact.receiver_id !== this.props.profile.id && <MenuItem key={i + 1} value={ contact.receiver_id } primaryText={ contact.receiver_id }/>
               );
             })}
           </DropDownMenu>
-          <form className="lote-form" ref="loteForm" onSubmit={this.handleSubmit}>
+
+          <form className="lote-form" ref="loteForm" onSubmit={ this.handleSubmit }>
             <div>
               <label className="lote-form-label">
-                <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" />
+                <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" value={ this.state.message } onChange={ this.handleMessageChange } />
               </label>
             </div>
-
-              <label>
-
-                <input type="radio" value="Unlocked" name="lock" onChange={this.changeLockStatus}/>
-                  <span className="lockedStatus">
-                    Unlocked
-                  </span>
-              </label>
-
-
-              <label>
-                <input type="radio" value="Locked" name="lock" onChange={this.changeLockStatus}/>
-                  <span className="lockedStatus">
-                    Locked
-                  </span>
-              </label>
-
-
-              <label>
-                <input type="radio" value="Trapped" name="lock" onChange={this.changeLockStatus}/>
-                  <span className="lockedStatus">
-                    Trapped
-                  </span>
-              </label>
-
             <div>
-              <RaisedButton labelColor='white' backgroundColor='#0740C3' className="submitButton" label="Submit" onTouchTap={this.handleSubmit}/>
+              <Checkbox label='Location Locked' checked={ this.state.lock } onCheck={ this.handleLockToggle } />
+            </div>
+            <div>
+              <RaisedButton labelColor='white' backgroundColor='#0740C3' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
-          <MapContainer {...this.props}/>
+
+          <MapContainer {...this.props} />
         </Card>
       </div>
     );

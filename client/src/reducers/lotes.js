@@ -10,4 +10,3 @@ const lotes = (state = [], action) => {
 };
 
 export default lotes;
-

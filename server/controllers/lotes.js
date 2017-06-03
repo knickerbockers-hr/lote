@@ -2,9 +2,9 @@ const models = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
   console.log ('getting all lotes');
-  models.Lote.fetchAll()
-    .then(lotes => {
-      res.status(200).send(lotes);
+  models.Contact.fetchAll()
+    .then(contacts => {
+      res.status(200).send(contacts);
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
@@ -14,7 +14,6 @@ module.exports.getAll = (req, res) => {
 
 module.exports.getAllForProfile = (req, res) => {
   console.log ('getting all lotes for profile', req.params.profileId);
-
 
   // ALL lotes with lotesReceived information only if receiver is the logged-in user (this is an atypical use-case)
   // models.Lote.Lote_Sent.fetchAll({withRelated: [ {'lotesReceived': (qb) => qb.where('receiver_id', req.params.profileId) }, 'lote']})
@@ -41,7 +40,7 @@ module.exports.getAllForProfile = (req, res) => {
     .fetchAll({withRelated: ['lotesReceived', 'lote']})
 
     .then(lotes => {
-      console.log ('lotes', lotes);
+      // console.log ('lotes', lotes);
       res.status(200).send(lotes);
     })
     .catch(err => {
@@ -53,6 +52,7 @@ module.exports.getAllForProfile = (req, res) => {
 
 
 module.exports.create = (req, res) => {
+  console.log ('creating lote');
   if (req.body.loteType === 'lotes_text') {
     models.Lote.Lote_Text.forge({ message: req.body.message })
       .save()
@@ -61,6 +61,7 @@ module.exports.create = (req, res) => {
         throw err;
       })
       .then(result => {
+        console.log ('lote text created');
         return models.Lote.Lote_Sent
           .forge({
             sender_id: req.body.senderId,
@@ -75,6 +76,7 @@ module.exports.create = (req, res) => {
         throw err;
       })
       .then(result => {
+        console.log ('lote received created');
         return models.Lote.Lote_Received
           .forge({
             lotes_sent_id: result.id,

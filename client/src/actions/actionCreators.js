@@ -20,7 +20,6 @@ export const addLotesToStore = (lotes) => {
   };
 };
 
-
 export const getLotes = (userId) => {
   console.log ('getting lotes');
   return function(dispatch, getState) {
@@ -40,6 +39,39 @@ export const getLotes = (userId) => {
       .then(function (lotes) {
         console.log ('received lotes', lotes);
         dispatch(addLotesToStore(lotes));
+      })
+      .catch(function (err) {
+        console.log (err);
+      });
+  };
+};
+
+export const addContactsToStore = (contacts) => {
+  return {
+    type: 'ADD_CONTACTS',
+    contacts
+  };
+};
+
+export const getContacts = (userId) => {
+  console.log ('getting contacts');
+  return function(dispatch, getState) {
+    var state = getState();
+    dispatch(loadingChanged(true));
+
+    return axios.get(`/api/profiles/${userId}/contacts`)
+      .then(function (res) {
+        dispatch(loadingChanged(false));
+
+        if (res.status === 200) {
+          console.log (res);
+          return res.data;
+        }
+        throw 'request failed';
+      })
+      .then(function (contacts) {
+        console.log ('received contacts', contacts);
+        dispatch(addContactsToStore(contacts));
       })
       .catch(function (err) {
         console.log (err);
