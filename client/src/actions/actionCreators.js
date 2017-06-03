@@ -116,31 +116,6 @@ export const contactList = (contacts) => {
   };
 };
 
-export const getContacts = (contacts) => {
-  return function(dispatch, getState) {
-    var state = getState();
-    dispatch(loadingChanged(true));
-
-    return axios.get(`/api/profiles/${userId}/contacts`)
-      .then(function (res) {
-        dispatch(loadingChanged(false));
-
-        if (res.status === 200) {
-          console.log (res);
-          return res.data;
-        }
-        throw 'request failed';
-      })
-      .then(function (contacts) {
-        console.log ('received contacts', contacts);
-        dispatch(addContact(contacts));
-      })
-      .catch(function (err) {
-        console.log (err);
-      });
-  };
-};
-
 // export const addLote = (lote) => {
 //   return {
 //     type: 'ADD_LOTE',
