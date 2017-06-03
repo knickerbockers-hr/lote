@@ -6,7 +6,7 @@ import rootReducer from './reducers/index';
 var defaultState = {
   profile: {},
   lotes: [],
-  contacts: ['Ed', 'Alana', 'Ivana', 'Connor'],
+  contacts: [],
   myInt: 100,
   lotecation: {
     lat: () => { return 0; },

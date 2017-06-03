@@ -15,7 +15,7 @@ module.exports.getAll = (req, res) => {
 module.exports.getAllForProfile = (req, res) => {
   console.log ('getting all contacts for profile', req.params.profileId);
 
-  models.Contact.Sender_Receiver.where({ sender_id: req.params.profileId }).fetchAll()
+  models.Contact.Sender_Receiver.where({ sender_id: req.params.profileId }).fetchAll({withRelated: ['receiver']})
     .then(contacts => {
       console.log ('contacts', contacts);
       res.status(200).send(contacts);

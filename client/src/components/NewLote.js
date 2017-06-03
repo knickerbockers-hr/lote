@@ -65,10 +65,10 @@ class NewLote extends React.Component {
         <h1>New Lote</h1>
         <Card>
           <DropDownMenu ref="receiver" value={ this.state.receiverId ? this.state.receiverId : this.props.profile.id } onChange={ this.handleRecipientChange } openImmediately={ false }>
-            <MenuItem value={ this.props.profile.id } primaryText="Self"/>
+            <MenuItem value={ this.props.profile.id } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (
-                contact.receiver_id !== this.props.profile.id && <MenuItem key={i + 1} value={ contact.receiver_id } primaryText={ contact.receiver_id }/>
+                contact.receiver_id !== this.props.profile.id && <MenuItem key={i + 1} value={ contact.receiver_id } primaryText={ contact.receiver.display }/>
               );
             })}
           </DropDownMenu>
