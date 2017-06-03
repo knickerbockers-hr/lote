@@ -10,7 +10,6 @@ import NewLote from './NewLote';
 import Lote from './Lote';
 import MyProfile from './MyProfile';
 import Random from './Random';
-//import MapContainer from './MapContainer.jsx';
 
 class Main extends React.Component {
 

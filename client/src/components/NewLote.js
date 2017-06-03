@@ -63,6 +63,14 @@ class NewLote extends React.Component {
   }
 
   render() {
+    let p = this.props;
+    const mapProps = {
+      history: p.history,
+      location: p.location,
+      lotecation: p.lotecation,
+      userLocation: p.userLocation,
+      updateLotecation: p.updateLotecation
+    };
     return (
       <div className={'newLoteContainer'}>
         <Card>
@@ -89,7 +97,8 @@ class NewLote extends React.Component {
               <RaisedButton labelColor='white' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
-          <MapContainer {...this.props} />
+
+          <MapContainer {...mapProps} />
         </Card>
       </div>
     );

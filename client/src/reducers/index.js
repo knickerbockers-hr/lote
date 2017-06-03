@@ -9,13 +9,15 @@ import lotecation from './lotecation';
 import activePage from './activePage';
 import activeContact from './activeContact';
 import activeMessage from './activeMessage';
+import userLocation from './user-location';
 
-const rootReducer = combineReducers({ 
+const rootReducer = combineReducers({
   profile,
   lotes,
   contacts,
   myInt,
   lotecation,
+  userLocation,
   activePage,
   activeContact,
   activeMessage,

@@ -93,23 +93,30 @@ export const updateLotecation = (location) => {
   };
 };
 
+export const updateUserLocation = (location) => {
+  return {
+    type: 'UPDATE_USER_LOCATION',
+    payload: location
+  };
+};
+
 export const setActivePage = (activePage) => {
   return {
-    type: 'SET_ACTIVE_PAGE', 
+    type: 'SET_ACTIVE_PAGE',
     activePage
   };
 };
 
 export const setActiveContact = (activeContact) => {
   return {
-    type: 'SET_ACTIVE_CONTACT', 
+    type: 'SET_ACTIVE_CONTACT',
     activeContact
   };
 };
 
 export const setActiveMessage = (activeMessage) => {
   return {
-    type: 'SET_ACTIVE_MESSAGE', 
+    type: 'SET_ACTIVE_MESSAGE',
     activeMessage
   };
 };

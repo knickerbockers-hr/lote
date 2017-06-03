@@ -65,8 +65,7 @@ class WrappedMap extends React.Component {
   }
 
   render() {
-    const lotecation = this.props.lotecation;
-
+    const {lotecation, userLocation} = this.props;
 
     if (!this.props.loaded) {
       return (
@@ -111,8 +110,8 @@ class WrappedMap extends React.Component {
               height: '100%',
               width: '100%'
             }}
-            center={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
-            initialCenter={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
+            center={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
+            initialCenter={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
             onDragend={this.centerMoved}
           >
           </Map>
@@ -133,6 +132,13 @@ class MapWrapper extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.loaded !== this.props.loaded ||
+      nextProps.location !== this.props.location ||
+      nextProps.lotecation !== this.props.lotecation ||
+      nextProps.userLocation !== this.props.userLocation;
   }
 
   render() {
