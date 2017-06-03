@@ -8,6 +8,7 @@
     "postinstall-dev": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start-dev": "nodemon index.js",
     "start": "node index.js",
+    "start-native": "node node_modules/react-native/local-cli/cli.js start",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
     "heroku-postbuild": "knex migrate:latest && webpack -p --config webpack.config.babel.js"
@@ -22,6 +23,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-2": "^6.24.1",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
@@ -48,6 +50,7 @@
     "pg": "^6.1.5",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-native": "^0.44.2",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
@@ -59,6 +62,7 @@
     "webpack": "^2.3.2"
   },
   "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
     "chai": "^3.5.0",
     "grunt": "~0.4.5",
     "grunt-eslint": "^19.0.0",

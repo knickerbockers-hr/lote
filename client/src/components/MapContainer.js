@@ -126,7 +126,6 @@ class WrappedMap extends React.Component {
       );
     }
   }
-
 }
 
 class MapWrapper extends React.Component {

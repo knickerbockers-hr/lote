@@ -25,6 +25,8 @@ class Lotes extends React.Component {
     return (
       <div>
         <h1>Lotes</h1>
+        {console.log('PROPS IN LOTE.JS', this.props)}
+
         {this.props.lotes.map((lote, i) => {
           return (<div style={lote.sender_id === this.props.profile.id ? this.state.senderStyle : this.state.receiverStyle} key={lote.id}>{lote.lote.message}</div>);
         })}
