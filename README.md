@@ -2,14 +2,14 @@
 
 Lote
 
-Enables users to leave location-based notes for themselves or someone else.
+Enables users to leave location-based notes for themselves or others.
 
 ## Team
 
 - Ivana He
 - Edward Kim
 - Alana Turangan
-- Conor Wilson
+- Connor Wilson
 
 ## Roadmap
 
