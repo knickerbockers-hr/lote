@@ -17,7 +17,6 @@ class NewLote extends React.Component {
 
     this.state = {
       lock: false,
-      redirect: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,7 +49,7 @@ class NewLote extends React.Component {
     .then((res) => {
       this.props.setActiveMessage('');
       this.props.getLotes(this.props.profile.id);
-      this.setState({ redirect: true });
+      this.props.history.push('/lotes');
       console.log (res);
     })
     .catch((err) => {
@@ -61,7 +60,6 @@ class NewLote extends React.Component {
   render() {
     return (
       <div className={'newLoteContainer'}>
-        { this.state.redirect && <Redirect to='/lotes' /> }
         <Card>
           <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>

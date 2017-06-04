@@ -21,7 +21,6 @@ class Lotes extends React.Component {
         marginTop: 5,
         padding: 5,
       },
-      redirect: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,14 +28,13 @@ class Lotes extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ redirect: true });
+    this.props.history.push('/lotes/new');
   }
 
   render() {
     let lotesDisplayCount = 0;
     return (
       <div>
-        { this.state.redirect && <Redirect to='/lotes/new' /> }
         <h1>
           { this.props.activeContact.display ? this.props.activeContact.display : this.props.activeContact.email }
           { !this.props.activeContact.email && 'No Contact Selected'}
