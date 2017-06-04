@@ -13,7 +13,6 @@ class List extends React.Component {
         marginTop: 5,
         padding: 5,
       },
-      redirect: false
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -21,13 +20,12 @@ class List extends React.Component {
 
   handleClick(receiver) {
     this.props.setActiveContact(receiver);
-    this.setState({ redirect: true });
+    this.props.history.push('/lotes');
   }
 
   render() {
     return (
       <div>
-        { this.state.redirect && <Redirect to='lotes' /> }
         { !this.props.contacts ? <p>No Contacts Yet!</p>
           : this.props.contacts.map((contact, index) => {
             return (
