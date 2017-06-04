@@ -7,15 +7,17 @@ import contacts from './contacts';
 import myInt from './myInt';
 import lotecation from './lotecation';
 import activeContact from './activeContact';
+import activeMessage from './activeMessage';
 
 const rootReducer = combineReducers({ 
-  profile, 
-  lotes, 
+  profile,
+  lotes,
   contacts,
-  myInt, 
+  myInt,
   lotecation,
-  activeContact, 
-  routing: routerReducer 
+  activeContact,
+  activeMessage,
+  routing: routerReducer
 });
 
 export default rootReducer;

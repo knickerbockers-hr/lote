@@ -93,25 +93,16 @@ export const updateLotecation = (location) => {
   };
 };
 
-export const selectContact = (activeContact) => {
-  console.log('You clicked on contact: ', activeContact);
+export const setActiveContact = (activeContact) => {
   return {
-    type: 'SELECT_CONTACT', 
-    //need to add details for what to return for active contact
+    type: 'SET_ACTIVE_CONTACT', 
     activeContact
   };
 };
 
-// export const addLote = (lote) => {
-//   return {
-//     type: 'ADD_LOTE',
-//     lote
-//   };
-// };
-
-// export const removeLote = (index) => {
-//   return {
-//    type: 'REMOVE_LOTE',
-//    index
-//   };
-// };
+export const setActiveMessage = (activeMessage) => {
+  return {
+    type: 'SET_ACTIVE_MESSAGE', 
+    activeMessage
+  };
+};
