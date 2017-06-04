@@ -37,7 +37,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav {...this.props} />
         <Switch>
           <Route exact path='/' render={ this.Home } />
           <Route exact path='/contacts' render={ this.Contacts } />

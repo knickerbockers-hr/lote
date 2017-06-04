@@ -23,7 +23,7 @@ router.route('/:profileId/lotes')
 
 router.route('/:profileId/contacts')
   .get(ContactController.getAllForProfile)
-  // .post(ContactController.create)
+  .post(ContactController.create)
   ;
 
 module.exports = router;

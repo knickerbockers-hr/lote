@@ -59,7 +59,7 @@ const styles = {
   searchButton: {
     display: 'table',
     width: '125px',
-    float: 'left',
+    // float: 'left',
     clear: 'left',
     padding: '5x 10px'
   },

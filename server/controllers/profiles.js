@@ -41,6 +41,22 @@ module.exports.getOne = (req, res) => {
     });
 };
 
+module.exports.getOneByEmail = (req, res) => {
+  models.Profile.where({ email: req.params.email }).fetch()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      res.status(200).send(profile);
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
+};
+
 module.exports.update = (req, res) => {
   models.Profile.where({ id: req.params.profileId }).fetch()
     .then(profile => {

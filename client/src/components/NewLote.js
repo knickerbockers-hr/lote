@@ -41,7 +41,6 @@ class NewLote extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    console.log ('receiver id', this.refs.receiver.props.value);
     axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
       senderId: this.props.profile.id,
       receiverId: this.refs.receiver.props.value,
