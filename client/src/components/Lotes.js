@@ -42,12 +42,20 @@ class Lotes extends React.Component {
           { !this.props.activeContact.email && 'No Contact Selected'}
         </h1>
 
-        { this.props.lotes.map((lote, i) => {
-          if (lote.sender_id === this.props.activeContact.id || lote.lotesReceived[0].receiver_id === this.props.activeContact.id) {
-            lotesDisplayCount++;
-            return (<div style={lote.sender_id === this.props.profile.id ? this.state.senderStyle : this.state.receiverStyle} key={lote.id}>{lote.lote.message}</div>);
-          }
-        })}
+        { (this.props.activeContact.id !== this.props.profile.id)
+            ? this.props.lotes.map((lote, i) => {
+              if (lote.sender_id === this.props.activeContact.id || lote.lotesReceived[0].receiver_id === this.props.activeContact.id) {
+                lotesDisplayCount++;
+                return (<div style={lote.sender_id === this.props.profile.id ? this.state.senderStyle : this.state.receiverStyle} key={lote.id}>{lote.lote.message}</div>);
+              }
+            })
+            : this.props.lotes.map((lote, i) => {
+              if (lote.sender_id === this.props.profile.id && lote.lotesReceived[0].receiver_id === this.props.profile.id) {
+                lotesDisplayCount++;
+                return (<div style={lote.sender_id === this.props.profile.id ? this.state.senderStyle : this.state.receiverStyle} key={lote.id}>{lote.lote.message}</div>);
+              }
+            })
+        }
         { lotesDisplayCount === 0 && <div>No Lote History</div> }
 
         { this.props.activeContact.email &&
