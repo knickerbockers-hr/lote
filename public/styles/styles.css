@@ -29,6 +29,18 @@ h1 {
   margin: 10px;
 }
 
+.pageContainer {
+  margin-top: 20px;
+}
+
+.newContactForm {
+  text-align: center;
+}
+
+.newContactInput {
+  margin-left: 10px;
+}
+
 /*
 .lote-form {
   width: 400px;

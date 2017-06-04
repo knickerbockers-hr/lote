@@ -6,6 +6,7 @@ import lotes from './lotes';
 import contacts from './contacts';
 import myInt from './myInt';
 import lotecation from './lotecation';
+import activePage from './activePage';
 import activeContact from './activeContact';
 import activeMessage from './activeMessage';
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   contacts,
   myInt,
   lotecation,
+  activePage,
   activeContact,
   activeMessage,
   routing: routerReducer

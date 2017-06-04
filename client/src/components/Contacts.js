@@ -3,10 +3,14 @@ import List from './List';
 import NewContact from './NewContact';
 
 class Contacts extends React.Component {
+
+  componentWillMount() {
+    this.props.setActivePage('Contacts');
+  }
+
   render() {
     return (
-      <div>
-        <h1>Contacts</h1>
+      <div className="pageContainer">
         <NewContact {...this.props} />
         <List {...this.props} />
       </div>

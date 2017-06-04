@@ -8,6 +8,7 @@ import Contacts from './Contacts';
 import Lotes from './Lotes';
 import NewLote from './NewLote';
 import Lote from './Lote';
+import MyProfile from './MyProfile';
 import Random from './Random';
 //import MapContainer from './MapContainer.jsx';
 
@@ -21,6 +22,7 @@ class Main extends React.Component {
     this.Lotes = () => <Lotes {...this.props} />;
     this.NewLote = () => <NewLote {...this.props} />;
     this.Lote = () => <Lote {...this.props} />;
+    this.MyProfile = () => <MyProfile {...this.props} />;
     this.Random = () => <Random {...this.props} />;
   }
 
@@ -44,6 +46,7 @@ class Main extends React.Component {
           <Route exact path='/lotes' render={ this.Lotes } />
           <Route exact path='/lotes/new' render={ this.NewLote } />
           <Route exact path='/lotes/:loteId' render={ this.Lote } />
+          <Route exact path='/myprofile' render={ this.MyProfile } />
           <Route exact path='/random' render={ this.Random } />
         </Switch>
       </div>

@@ -25,11 +25,12 @@ class NewLote extends React.Component {
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
   }
 
+  componentWillMount() {
+    this.props.setActivePage('New Lote');
+  }
+
   handleRecipientChange (event, index, receiver) {
-    // console.log ('receiver id', receiverId);
     this.props.setActiveContact(receiver);
-    // console.log (this.props.activeContact.id);
-    // this.props.setActiveContact(receiver);
   }
 
   handleLockToggle(event, checked) {
@@ -55,14 +56,12 @@ class NewLote extends React.Component {
     .catch((err) => {
       console.log (err);
     });
-
   }
 
   render() {
     return (
-      <div className='newLoteContainer'>
+      <div className={'newLoteContainer'}>
         { this.state.redirect && <Redirect to='/lotes' /> }
-        <h1>New Lote</h1>
         <Card>
           <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>

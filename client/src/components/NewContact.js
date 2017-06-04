@@ -25,9 +25,9 @@ class NewContact extends React.Component {
   render() {
     return (
       <div>
-        <form ref="contactForm" onSubmit={ this.handleSubmit.bind(this) }>
+        <form className="newContactForm" ref="contactForm" onSubmit={ this.handleSubmit.bind(this) }>
           <label>New Contact:
-            <input ref="receiverEmail" placeholder="Enter email address" />
+            <input className="newContactInput" ref="receiverEmail" placeholder="Enter email address" />
           </label>
         </form>
       </div>
