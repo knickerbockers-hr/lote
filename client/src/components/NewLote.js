@@ -16,14 +16,7 @@ class NewLote extends React.Component {
     super(props);
 
     this.state = {
-      lock: false,
-      receiverId: 0,
-      message: '',
-      styles: {
-        checkbox: {
-          'margin-right': 0
-        }
-      }
+      lock: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
