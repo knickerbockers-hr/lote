@@ -28,7 +28,6 @@ h1 {
   margin: 10px;
 }
 
-
 .pageContainer {
   margin-top: 20px;
 }
@@ -39,16 +38,18 @@ h1 {
 
 .newContactInput {
   margin-left: 10px;
+}
 
 .chat {
   width: 400px;
+  display: inline-block;
 }
 
 .chatContainer {
   text-align: center;
 }
 
-.senderStyle {
+.receiverStyle {
   background-color: #ffff99;
   margin-top: 5px;
   padding: 5px;
@@ -58,7 +59,7 @@ h1 {
   clear: both;
 }
 
-.receiverStyle {
+.senderStyle {
   background-color: #afd9e0;
   margin-top: 5px;
   padding: 5px;
@@ -68,7 +69,7 @@ h1 {
   clear: both;
 }
 
-.receiverStyle::after {
+.senderStyle::after {
   text-align: center;
   content: ' ';
   position: absolute;
@@ -82,7 +83,7 @@ h1 {
   border-color: #afd9e0 transparent transparent #afd9e0;
 }
 
-.senderStyle::before {
+.receiverStyle::before {
   text-align: center;
   content: '';
   position: absolute;
