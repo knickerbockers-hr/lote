@@ -16,7 +16,7 @@ class NewLote extends React.Component {
     super(props);
 
     this.state = {
-      lock: false,
+      lock: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,6 +26,11 @@ class NewLote extends React.Component {
 
   componentWillMount() {
     this.props.setActivePage('New Lote');
+
+  }
+
+  handleRecipientChange (event, index, receiverId) {
+    this.setState({ receiverId });
   }
 
   handleRecipientChange (event, index, receiver) {
@@ -78,13 +83,12 @@ class NewLote extends React.Component {
               </label>
             </div>
             <div>
-              <Checkbox label='Location-Locked' checked={ this.state.lock } onCheck={ this.handleLockToggle } />
+              <Checkbox label='Location-Locked' style={{width: 'initial', margin: 'auto', paddingRight: 12}} labelStyle={{width: 'initial'}} checked={ this.state.lock } onCheck={ this.handleLockToggle } />
             </div>
             <div>
-              <RaisedButton labelColor='white' backgroundColor='#0740C3' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
+              <RaisedButton labelColor='white' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
-
           <MapContainer {...this.props} />
         </Card>
       </div>

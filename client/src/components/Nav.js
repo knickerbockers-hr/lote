@@ -22,14 +22,14 @@ class Nav extends React.Component {
   render() {
     return (
       <div>
-        <AppBar style={{ backgroundColor: '#0740C3' }} title={this.props.activePage} iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={ this.toggleDrawer }/>
+        <AppBar style={{ backgroundColor: '#48d09b' }} title={this.props.activePage} iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={ this.toggleDrawer }/>
         <Drawer
           docked={ false }
           width={ 300 }
           onRequestChange={ this.toggleDrawer }
           open={ this.state.open }
         >
-          <AppBar style={{ backgroundColor: '#0740C3' }} title="Menu" onLeftIconButtonTouchTap={ this.toggleDrawer } />
+          <AppBar style={{ backgroundColor: '#48d09b' }} title="Menu" onLeftIconButtonTouchTap={ this.toggleDrawer } />
 
           <MenuItem primaryText="Home" containerElement={ <Link className="nav-btn" to="/"/> } onTouchTap={ ()=>{ this.toggleDrawer(); } } />
           <MenuItem primaryText="Contacts" containerElement={ <Link className="nav-btn" to="/contacts"/> } onTouchTap={ ()=>{ this.toggleDrawer(); } } />

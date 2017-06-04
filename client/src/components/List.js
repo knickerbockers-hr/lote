@@ -12,7 +12,7 @@ class List extends React.Component {
         borderRadius: 5,
         marginTop: 5,
         padding: 5,
-      },
+      }
     };
 
     this.handleClick = this.handleClick.bind(this);

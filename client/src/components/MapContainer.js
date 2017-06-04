@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Map, {Marker, GoogleApiWrapper} from 'google-maps-react';
 
+
 class WrappedMap extends React.Component {
   constructor(props) {
     super(props);
