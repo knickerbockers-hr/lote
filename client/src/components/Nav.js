@@ -35,7 +35,6 @@ class Nav extends React.Component {
           <MenuItem primaryText="Contacts" containerElement={ <Link className="nav-btn" to="/contacts"/> } onTouchTap={ ()=>{ this.toggleDrawer(); } } />
           <MenuItem primaryText="New Lote" containerElement={ <Link className="nav-btn" to="/lotes/new"/> } onTouchTap={ ()=>{ this.toggleDrawer(); } } />
           <MenuItem primaryText="My Profile" containerElement={ <Link className="nav-btn" to="/profile"/> } onTouchTap={ ()=>{ this.toggleDrawer(); } } />
-          <MenuItem primaryText="Random" containerElement={ <Link className="nav-btn" to="/random"/> } onTouchTap={ ()=>{ this.toggleDrawer(); } } />
         </Drawer>
       </div>
     );

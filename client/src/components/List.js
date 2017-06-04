@@ -13,16 +13,25 @@ class List extends React.Component {
         marginTop: 5,
         padding: 5,
       },
+      redirect: false
     };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(receiver) {
+    this.props.setActiveContact(receiver);
+    this.setState({ redirect: true });
   }
 
   render() {
     return (
       <div>
+        { this.state.redirect && <Redirect to='lotes' /> }
         { !this.props.contacts ? <p>No Contacts Yet!</p>
           : this.props.contacts.map((contact, index) => {
             return (
-              <div style={ this.state.contactCardStyle } key={ index } onClick={ () => this.props.selectContact(contact.receiver) }>
+              <div style={ this.state.contactCardStyle } key={ index } onClick={ () => this.handleClick(contact.receiver) }>
                 { contact.receiver.display ? contact.receiver.display : contact.receiver.email }
               </div>
             );

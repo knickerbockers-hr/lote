@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -16,59 +17,57 @@ class NewLote extends React.Component {
 
     this.state = {
       lock: false,
-      receiverId: 0,
-      message: ''
+      redirect: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLockToggle = this.handleLockToggle.bind(this);
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
-    this.handleMessageChange = this.handleMessageChange.bind(this);
   }
 
   handleRecipientChange (event, index, receiverId) {
-    this.setState({ receiverId });
-  }
-
-  handleMessageChange (event) {
-    this.setState({ message: event.target.value });
+    // this.setState({ receiverId });
+    this.setActiveContact (receiverId);
   }
 
   handleLockToggle(event, checked) {
     this.setState({ lock: checked });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
 
     axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
       senderId: this.props.profile.id,
       receiverId: this.refs.receiver.props.value,
       loteType: 'lotes_text',
-      message: this.state.message,
+      message: this.props.activeMessage,
       lock: this.state.lock
     })
     .then((res) => {
+      this.props.setActiveMessage('');
       this.props.getLotes(this.props.profile.id);
+      this.setState({ redirect: true });
       console.log (res);
     })
     .catch((err) => {
       console.log (err);
     });
 
-    this.setState({ message: '' });
   }
 
   render() {
     return (
       <div className='newLoteContainer'>
+        { this.state.redirect && <Redirect to='/lotes' /> }
         <h1>New Lote</h1>
         <Card>
-          <DropDownMenu ref="receiver" value={ this.state.receiverId ? this.state.receiverId : this.props.profile.id } onChange={ this.handleRecipientChange } openImmediately={ false }>
+          <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact.id : this.props.profile.id } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile.id } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (
-                contact.receiver_id !== this.props.profile.id && <MenuItem key={i + 1} value={ contact.receiver_id } primaryText={ contact.receiver.display }/>
+                contact.receiver_id !== this.props.profile.id &&
+                  <MenuItem key={i + 1} value={ contact.receiver_id } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
               );
             })}
           </DropDownMenu>
@@ -76,7 +75,7 @@ class NewLote extends React.Component {
           <form className="lote-form" ref="loteForm" onSubmit={ this.handleSubmit }>
             <div>
               <label className="lote-form-label">
-                <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" value={ this.state.message } onChange={ this.handleMessageChange } />
+                <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
               </label>
             </div>
             <div>
