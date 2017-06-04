@@ -8,23 +8,18 @@ class Lotes extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      redirect: false
-    },
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ redirect: true });
+    this.props.history.push('/lotes/new');
   }
 
   render() {
     let lotesDisplayCount = 0;
     return (
-      <div>
-        { this.state.redirect && <Redirect to='/lotes/new' /> }
+      <div className="chatContainer">
         <h1>
           { this.props.activeContact.display ? this.props.activeContact.display : this.props.activeContact.email }
           { !this.props.activeContact.email && 'No Contact Selected'}
