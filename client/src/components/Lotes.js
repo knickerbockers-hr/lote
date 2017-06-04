@@ -9,41 +9,7 @@ class Lotes extends React.Component {
     super(props);
 
     this.state = {
-      // senderStyle: {
-      //   backgroundColor: '#ffff99',
-      //   marginTop: 5,
-      //   padding: 5,
-      //   position: 'relative',
-      //   margin: '5px 45px 5px 20px',
-      //   float: 'left',
-      //   clear: 'both'
-      // },
-
-      // receiverStyle: {
-      //   backgroundColor: '#afd9e0',
-      //   marginTop: 5,
-      //   padding: 5,
-      //   position: 'relative',
-      //   margin: '5px 45px 5px 20px',
-      //   float: 'right',
-      //   clear: 'both'
-      // },
-
-      // 'senderStyle::before': {
-      //   textAlign: 'center',
-      //   content: '',
-      //   position: 'absolute',
-      //   width: 0,
-      //   height: 0,
-      //   left: -16,
-      //   right: 'auto',
-      //   top: 5,
-      //   bottom: 'auto',
-      //   border: '9.8px solid',
-      //   borderColor: '#ffff99 #ffff99  transparent transparent'
-      // },
       redirect: false
-
     },
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -104,5 +70,3 @@ class Lotes extends React.Component {
 }
 
 export default Lotes;
-
-// return (<div style={lote.sender_id === this.props.profile.id ? this.state.senderStyle : this.state.receiverStyle} key={lote.id}>{lote.lote.message}</div>);
