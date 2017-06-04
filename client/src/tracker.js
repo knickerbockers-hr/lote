@@ -1,7 +1,6 @@
 import store from './store';
 
 let success = (pos) => {
-  console.log('locationchange: ', pos.coords.latitude);
   store.dispatch({
     type: 'UPDATE_USER_LOCATION',
     payload: {
@@ -12,6 +11,8 @@ let success = (pos) => {
 };
 
 let error = (err) => {
+  // possibly want some sort of red flag in header when tracking isn't working
+  // to let you know when you aren't picking up lotes
   console.warn('Tracking error: ', err);
 };
 

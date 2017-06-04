@@ -102,7 +102,7 @@ class WrappedMap extends React.Component {
               // className={styles.button}
               type="submit"
               value="Go" />
-            <span> {lotecation.lat()}, {lotecation.lng()} </span>
+            <span> {lotecation.lat() || userLocation.lat()}, {lotecation.lng() || userLocation.lng()} </span>
             </form>
           <Map {...this.props}
             containerStyle={{
