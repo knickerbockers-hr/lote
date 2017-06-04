@@ -26,8 +26,7 @@ class NewLote extends React.Component {
   }
 
   handleRecipientChange (event, index, receiverId) {
-    // this.setState({ receiverId });
-    this.setActiveContact (receiverId);
+    this.setActiveContact(receiverId);
   }
 
   handleLockToggle(event, checked) {

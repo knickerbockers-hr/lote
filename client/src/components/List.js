@@ -42,6 +42,4 @@ class List extends React.Component {
   }
 }
 
-// need to handle redirect with click { <Redirect to='/lotes' /> }
-
 export default List;
