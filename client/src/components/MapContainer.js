@@ -118,8 +118,8 @@ class WrappedMap extends React.Component {
           <img style={{
             position: 'relative',
             top: '40vh',
-            left: '50%',
-            transform: 'translate(-50%, -100%)'
+            left: '0%',
+            transform: 'translate(0%, -100%)'
           }}
             src={'../assets/location-icon.png'}></img>
         </div>
