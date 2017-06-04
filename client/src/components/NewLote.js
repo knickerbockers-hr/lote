@@ -17,7 +17,14 @@ class NewLote extends React.Component {
 
     this.state = {
       lock: false,
-      redirect: false
+      redirect: false,
+      receiverId: 0,
+      message: '',
+      styles: {
+        checkbox: {
+          'margin-right': 0
+        }
+      }
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,8 +32,13 @@ class NewLote extends React.Component {
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
   }
 
+
   componentWillMount() {
     this.props.setActivePage('New Lote');
+
+
+  handleRecipientChange (event, index, receiverId) {
+    this.setState({ receiverId });
   }
 
   handleRecipientChange (event, index, receiver) {
@@ -80,10 +92,12 @@ class NewLote extends React.Component {
               </label>
             </div>
             <div>
+
               <Checkbox label='Location-Locked' checked={ this.state.lock } onCheck={ this.handleLockToggle } />
+              <Checkbox labelStyle={this.state.styles.checkbox} label="Location Lock" className="lockCheck" checked={ this.state.lock } onCheck={ this.handleLockToggle } />
             </div>
             <div>
-              <RaisedButton labelColor='white' backgroundColor='#0740C3' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
+              <RaisedButton labelColor='white' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
           <MapContainer {...this.props} />

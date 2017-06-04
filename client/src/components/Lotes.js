@@ -14,14 +14,26 @@ class Lotes extends React.Component {
         borderRadius: 5,
         marginTop: 5,
         padding: 5,
+        position: 'relative',
+        margin: '5px 45px 5px 20px',
+        float: 'left',
+        clear: 'both'
+
       },
       receiverStyle: {
         backgroundColor: 'pink',
         borderRadius: 5,
         marginTop: 5,
         padding: 5,
+<<<<<<< HEAD
       },
       redirect: false
+=======
+        margin: '5px 45px 5px 20px',
+        float: 'right',
+        clear: 'both'
+      }
+>>>>>>> change color scheme and chat history frontend
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,6 +47,7 @@ class Lotes extends React.Component {
   render() {
     let lotesDisplayCount = 0;
     return (
+<<<<<<< HEAD
       <div>
         { this.state.redirect && <Redirect to='/lotes/new' /> }
         <h1>
@@ -68,9 +81,24 @@ class Lotes extends React.Component {
             </div>
           </form>
         }
+=======
+    <div>
+      <h1 className="chatContainer">Lotes</h1>
+      <div className="chat">
+        {this.props.lotes.map((lote, i) => {
+          if (lote.sender_id === this.props.profile.id) {
+            return (<div className="senderStyle" key={lote.id}>{lote.lote.message}</div>);
+          } else {
+            return (<div className="receiverStyle" key={lote.id}>{lote.lote.message}</div>);
+          }
+        })}
+>>>>>>> change color scheme and chat history frontend
       </div>
+    </div>
     );
   }
 }
 
 export default Lotes;
+
+// return (<div style={lote.sender_id === this.props.profile.id ? this.state.senderStyle : this.state.receiverStyle} key={lote.id}>{lote.lote.message}</div>);
