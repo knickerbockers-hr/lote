@@ -41,7 +41,6 @@ class NewLote extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    console.log ('receiver id', this.refs.receiver.props.value);
     axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
       senderId: this.props.profile.id,
       receiverId: this.refs.receiver.props.value,
@@ -50,6 +49,7 @@ class NewLote extends React.Component {
       lock: this.state.lock
     })
     .then((res) => {
+      this.props.getLotes(this.props.profile.id);
       console.log (res);
     })
     .catch((err) => {
@@ -80,7 +80,7 @@ class NewLote extends React.Component {
               </label>
             </div>
             <div>
-              <Checkbox label='Location Locked' checked={ this.state.lock } onCheck={ this.handleLockToggle } />
+              <Checkbox label='Location-Locked' checked={ this.state.lock } onCheck={ this.handleLockToggle } />
             </div>
             <div>
               <RaisedButton labelColor='white' backgroundColor='#0740C3' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>

@@ -28,32 +28,52 @@ module.exports.getAllForProfile = (req, res) => {
 };
 
 module.exports.create = (req, res) => {
-  if (req.body.contactType === 'contacts_text') {
-    models.Contact.Contact_Text.forge({ message: req.body.message })
-      .save()
+  console.log ('create contact');
+  console.log (req.body.senderId);
+  console.log (req.body.receiverEmail);
+
+  models.Profile.where({ email: req.body.receiverEmail }).fetch()
+    .then((profile) => {
+      if (profile) {
+        return profile;
+      }
+
+      return models.Profile.forge({
+        email: req.body.receiverEmail
+      }).save()
       .error(err => {
-        console.error('ERROR: failed to create contact text');
+        console.error('ERROR: failed to create profile');
         throw err;
       })
-      .then(result => {
-        return models.Contact.Contacts_List
-          .forge({
-            sender_id: req.body.senderId,
-            contact_type: req.body.contactType,
-            contact_id: result.id
-          })
-          .save();
+      .then((profile) => {
+        return models.Auth.forge({
+          type: 'local',
+          password: 'password', // this should eventually be a randomly generated password
+          profile_id: profile.get('id')
+        }).save();
       })
       .error(err => {
-        console.error('ERROR: failed to create contacts list');
-        throw err;
-      })
-      .then(result => {
-        console.log('contact created successfully'); 
-        res.status(201).send(result); 
-      })
-      .catch(err => {
-        res.status(500).send(err); 
+        console.error('ERROR: failed to create auth');
       });
-  }
+    })
+    .then((result) => {
+      console.log ('create an entry in the senders_receivers table', result.id);
+      return models.Contact.Sender_Receiver.forge({
+        sender_id: req.body.senderId,
+        receiver_id: result.id
+      }).save();
+    })
+    .error(err => {
+      console.error('ERROR: failed to create contact');
+      throw err;
+    })
+    .then(result => {
+      console.log ('contact created successfully');
+      res.status(201).send(result);
+    })
+    .catch(err => {
+      console.log (err);
+      res.status(500).send(err);
+    });
 };
+

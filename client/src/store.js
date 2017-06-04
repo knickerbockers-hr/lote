@@ -11,9 +11,7 @@ let defaultState = {
   lotecation: {
     lat: () => { return 0; },
     lng: () => { return 0; }},
-  activeContact: null, //tried null and ''
-  addContacts: null, //tried null and ''
-  //contactsList: [{contact: 'Person'}]
+  activeContact: {}, //tried null and ''
 }; // we need a reducer for each state
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

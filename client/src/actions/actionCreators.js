@@ -94,25 +94,11 @@ export const updateLotecation = (location) => {
 };
 
 export const selectContact = (activeContact) => {
-  console.log('You clicked on contact: ', contact.name);
+  console.log('You clicked on contact: ', activeContact);
   return {
-    type: 'CONTACT_SELECTED', 
+    type: 'SELECT_CONTACT', 
     //need to add details for what to return for active contact
     activeContact
-  };
-};
-
-export const addContact = (addContacts) => {
-  return {
-    type: 'ADD_CONTACT', 
-    addContacts
-  };
-};
-
-export const contactList = (contacts) => {
-  return {
-    type: 'CONTACTS_LIST', 
-    contacts: contacts
   };
 };
 
