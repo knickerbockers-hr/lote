@@ -1,4 +1,3 @@
-
 const lotes = (state = [], action) => {
   switch (action.type) {
   case 'ADD_LOTES' :

@@ -25,8 +25,11 @@ class NewLote extends React.Component {
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
   }
 
-  handleRecipientChange (event, index, receiverId) {
-    this.setActiveContact(receiverId);
+  handleRecipientChange (event, index, receiver) {
+    // console.log ('receiver id', receiverId);
+    this.props.setActiveContact(receiver);
+    // console.log (this.props.activeContact.id);
+    // this.props.setActiveContact(receiver);
   }
 
   handleLockToggle(event, checked) {
@@ -38,7 +41,7 @@ class NewLote extends React.Component {
 
     axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
       senderId: this.props.profile.id,
-      receiverId: this.refs.receiver.props.value,
+      receiverId: this.props.activeContact.id,
       loteType: 'lotes_text',
       message: this.props.activeMessage,
       lock: this.state.lock
@@ -61,12 +64,12 @@ class NewLote extends React.Component {
         { this.state.redirect && <Redirect to='/lotes' /> }
         <h1>New Lote</h1>
         <Card>
-          <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact.id : this.props.profile.id } onChange={ this.handleRecipientChange } openImmediately={ false }>
-            <MenuItem value={ this.props.profile.id } primaryText={ this.props.profile.display + ' (Self)' }/>
+          <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
+            <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (
                 contact.receiver_id !== this.props.profile.id &&
-                  <MenuItem key={i + 1} value={ contact.receiver_id } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
+                  <MenuItem key={i + 1} value={ contact.receiver } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
               );
             })}
           </DropDownMenu>

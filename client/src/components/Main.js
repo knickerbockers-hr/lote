@@ -29,7 +29,7 @@ class Main extends React.Component {
     const script = document.getElementById('bundleScript');
     // console.log ('script', JSON.parse(script.getAttribute('data-user')));
     var user = JSON.parse(script.getAttribute('data-user'));
-    this.props.setProfile(user);
+    this.props.setActiveContact(this.props.setProfile(user).profile);
     this.props.getLotes(user.id);
     this.props.getContacts(user.id);
   }
