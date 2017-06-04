@@ -93,6 +93,13 @@ export const updateLotecation = (location) => {
   };
 };
 
+export const setActivePage = (activePage) => {
+  return {
+    type: 'SET_ACTIVE_PAGE', 
+    activePage
+  };
+};
+
 export const setActiveContact = (activeContact) => {
   return {
     type: 'SET_ACTIVE_CONTACT', 

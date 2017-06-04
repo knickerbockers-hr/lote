@@ -11,6 +11,7 @@ let defaultState = {
   lotecation: {
     lat: () => { return 0; },
     lng: () => { return 0; }},
+  activePage: 'Home',
   activeContact: {},
   activeMessage: '',
 }; // we need a reducer for each state

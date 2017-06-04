@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
     contacts: state.contacts,
     lotecation: state.lotecation,
     myInt: state.myInt,
+    activePage: state.activePage,
     activeContact: state.activeContact,
     activeMessage: state.activeMessage,
   };
