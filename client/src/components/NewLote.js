@@ -80,7 +80,7 @@ class NewLote extends React.Component {
             {this.props.contacts.map((contact, i) => {
               return (
                 contact.receiver_id !== this.props.profile.id &&
-                  <MenuItem key={i + 1} value={ contact.receiver } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
+                  <MenuItem key={ i + 1 } value={ contact.receiver } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
               );
             })}
           </DropDownMenu>

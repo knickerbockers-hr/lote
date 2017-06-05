@@ -88,7 +88,6 @@ const styles = {
     left: '-20px',
     top: '-20px',
   },
-
   awesome: {
     position: 'relative'
   }

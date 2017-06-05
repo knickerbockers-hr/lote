@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import styles from '../css/styles';
 
 class List extends React.Component {
 
@@ -12,7 +13,10 @@ class List extends React.Component {
         borderRadius: 5,
         marginTop: 5,
         padding: 5,
-      }
+        fontFamily: 'Geneva, sans-serif',
+        fontSize: '18px',
+        textAlign: 'center'
+      },
     };
 
     this.handleClick = this.handleClick.bind(this);
