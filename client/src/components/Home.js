@@ -1,14 +1,13 @@
 import React from 'react';
-//import image from '../css/LocationPin.png'; 
 
 class Home extends React.Component {
   constructor(props) {
-    super(props); 
+    super(props);
 
     this.state = {
       style: {
         textAlign: 'center'
-      }, 
+      },
       image: {
         url: 'https://cdn.pixabay.com/photo/2016/11/30/17/10/pin-1873372_960_720.png',
       },
@@ -27,7 +26,7 @@ class Home extends React.Component {
     return (
       <div style={ this.state.style }>
         <h1>Write location-based notes!</h1>
-        <img style={ this.state.stretch} src={ this.state.image.url }/>
+        <img style={ this.state.stretch } src='/assets/loteimage.png'/>
       </div>
     );
   }
