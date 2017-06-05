@@ -14,6 +14,7 @@ class List extends React.Component {
         marginTop: 5,
         padding: 5,
         fontFamily: 'Geneva, sans-serif',
+        fontSize: '18px',
         textAlign: 'center'
       },
     };
