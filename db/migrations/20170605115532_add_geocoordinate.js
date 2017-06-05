@@ -11,5 +11,4 @@ exports.down = function(knex, Promise) {
     table.dropColumn('latitude');
     table.dropColumn('longitude');
   });
-
 };
