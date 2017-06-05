@@ -38,8 +38,9 @@ class WrappedMap extends React.Component {
     const {google, map} = this.props;
 
     if (!google || !map) { return; }
-
-    const aref = this.refs.autocomplete;
+    //console.log(this.refs);
+    const aref = this.props.autocomplete;
+    //const aref = this.refs.autocomplete;
     const node = ReactDOM.findDOMNode(aref);
     var autocomplete = new google.maps.places.Autocomplete(node);
     autocomplete.bindTo('bounds', map);
@@ -70,7 +71,7 @@ class WrappedMap extends React.Component {
     if (!this.props.loaded) {
       return (
         <div className="container-fluid">
-          <form>
+          {/*<form>
             <input
               type="text"
               ref="autocomplete"
@@ -79,7 +80,7 @@ class WrappedMap extends React.Component {
               // className={styles.button}
               type="submit"
               value="Go" />
-            </form>
+            </form>*/}
           <div
             style={{
               position: 'relative',
@@ -110,7 +111,7 @@ class WrappedMap extends React.Component {
             transform: 'translate(0%, -100%)'
           }}
             src={'../assets/location-icon.png'}></img>
-          <form onSubmit={this.onSubmit} style={{
+          {/*<form onSubmit={this.onSubmit} style={{
             position: 'absolute',
             left: '0px',
             top: '10%'
@@ -123,7 +124,7 @@ class WrappedMap extends React.Component {
               // className={styles.button}
               type="submit"
               value="Go" />
-            </form>
+            </form>*/}
             <span style={{
               position: 'absolute',
               right: '0px',
