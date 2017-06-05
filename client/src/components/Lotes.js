@@ -31,17 +31,15 @@ class Lotes extends React.Component {
                   lotesDisplayCount++;
                   if (lote.sender_id === this.props.profile.id) {
                     return (<div className="senderStyle" key={lote.id}>{lote.lote.message}</div>);
+                  } else if (lote.lotesReceived[0].receiver_id === this.props.profile.id) {
+                    return (<div className="receiverStyle" key={lote.id}>{lote.lote.message}</div>);
                   }
                 }
               })
               : this.props.lotes.map((lote, i) => {
                 if (lote.sender_id === this.props.profile.id && lote.lotesReceived[0].receiver_id === this.props.profile.id) {
                   lotesDisplayCount++;
-                  if (lote.sender_id === this.props.profile.id) {
-                    return (<div className="senderStyle" key={lote.id}>{lote.lote.message}</div>);
-                  } else {
-                    return (<div className="receiverStyle" key={lote.id}>{lote.lote.message}</div>);
-                  }
+                  return (<div className="senderStyle" key={lote.id}>{lote.lote.message}</div>);
                 }
               })
           }
