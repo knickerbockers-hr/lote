@@ -62,6 +62,10 @@ class NewLote extends React.Component {
     });
   }
 
+  placeSubmit(event) {
+    event.preventDefault();
+  }
+
   render() {
     let p = this.props;
     const mapProps = {
@@ -69,12 +73,25 @@ class NewLote extends React.Component {
       location: p.location,
       lotecation: p.lotecation,
       userLocation: p.userLocation,
-      updateLotecation: p.updateLotecation
+      updateLotecation: p.updateLotecation,
+      autocomplete: this.refs.autocomplete
     };
     return (
       <div className={'newLoteContainer'}>
         <MapContainer {...mapProps} />
-        <Card>
+        <Card className={'hithere'} style={{
+          width: '40%'
+        }}>
+          <form className="lote-form">
+            <input
+              type="text"
+              ref="autocomplete"
+              placeholder="Enter a location" />
+            <input
+              // className={styles.button}
+              type="submit"
+              value="Go" />
+          </form>
           <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
