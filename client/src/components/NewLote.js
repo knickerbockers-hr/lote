@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
-import Card from 'material-ui/Card';
+import {Card, CardMedia} from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 
 class NewLote extends React.Component {
@@ -73,6 +73,7 @@ class NewLote extends React.Component {
     };
     return (
       <div className={'newLoteContainer'}>
+        <MapContainer {...mapProps} />
         <Card>
           <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
@@ -97,8 +98,6 @@ class NewLote extends React.Component {
               <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
-
-          <MapContainer {...mapProps} />
         </Card>
       </div>
     );

@@ -83,7 +83,7 @@ class WrappedMap extends React.Component {
           <div
             style={{
               position: 'relative',
-              height: '80vh',
+              height: '100%',
               width: '100%',
               'backgroundColor': '#eaeaea'
             }}>
@@ -92,18 +92,7 @@ class WrappedMap extends React.Component {
       );
     } else {
       return (
-        <div className="container-fluid">
-          <form onSubmit={this.onSubmit}>
-            <input
-              ref="autocomplete"
-              type="text"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
-            <span> {lotecation.lat() || userLocation.lat()}, {lotecation.lng() || userLocation.lng()} </span>
-            </form>
+        <div className="container-fluid fill">
           <Map {...this.props}
             containerStyle={{
               position: 'absolute',
@@ -117,11 +106,29 @@ class WrappedMap extends React.Component {
           </Map>
           <img style={{
             position: 'relative',
-            top: '40vh',
-            left: '0%',
+            top: '50vh',
             transform: 'translate(0%, -100%)'
           }}
             src={'../assets/location-icon.png'}></img>
+          <form onSubmit={this.onSubmit} style={{
+            position: 'absolute',
+            left: '0px',
+            top: '10%'
+          }}>
+            <input
+              ref="autocomplete"
+              type="text"
+              placeholder="Enter a location" />
+            <input
+              // className={styles.button}
+              type="submit"
+              value="Go" />
+            </form>
+            <span style={{
+              position: 'absolute',
+              right: '0px',
+              top: '10%'
+            }}> {lotecation.lat() || userLocation.lat()}, {lotecation.lng() || userLocation.lng()} </span>
         </div>
       );
     }
@@ -150,8 +157,8 @@ class MapWrapper extends React.Component {
           className={'map'}
           visible={false}
           containerStyle={{
-            height: '80vh',
-            width: '80%'
+            height: '100%',
+            width: '100%'
           }}>
             <WrappedMap {...props} />
       </Map>

@@ -2,6 +2,10 @@ h1 {
   color: #11234D;
 }
 
+.fill {
+  height: 100%;
+}
+
 .nav {
   text-align: center;
   bottom: 10px;
@@ -81,6 +85,16 @@ h1 {
   bottom: auto;
   border: 9.8px solid;
   border-color: #afd9e0 transparent transparent #afd9e0;
+}
+
+.map {
+    display: block;
+    position:absolute;
+    height:auto;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
 }
 
 .receiverStyle::before {
