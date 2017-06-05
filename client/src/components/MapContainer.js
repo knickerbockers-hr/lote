@@ -65,8 +65,7 @@ class WrappedMap extends React.Component {
   }
 
   render() {
-    const lotecation = this.props.lotecation;
-
+    const {lotecation, userLocation} = this.props;
 
     if (!this.props.loaded) {
       return (
@@ -103,7 +102,7 @@ class WrappedMap extends React.Component {
               // className={styles.button}
               type="submit"
               value="Go" />
-            <span> {lotecation.lat()}, {lotecation.lng()} </span>
+            <span> {lotecation.lat() || userLocation.lat()}, {lotecation.lng() || userLocation.lng()} </span>
             </form>
           <Map {...this.props}
             containerStyle={{
@@ -111,16 +110,16 @@ class WrappedMap extends React.Component {
               height: '100%',
               width: '100%'
             }}
-            center={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
-            initialCenter={{lat: lotecation.lat() || 37.774929, lng: lotecation.lng() || -122.419416}}
+            center={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
+            initialCenter={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
             onDragend={this.centerMoved}
           >
           </Map>
           <img style={{
             position: 'relative',
             top: '40vh',
-            left: '50%',
-            transform: 'translate(-50%, -100%)'
+            left: '0%',
+            transform: 'translate(0%, -100%)'
           }}
             src={'../assets/location-icon.png'}></img>
         </div>
@@ -133,6 +132,13 @@ class MapWrapper extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.loaded !== this.props.loaded ||
+      nextProps.location !== this.props.location ||
+      nextProps.lotecation !== this.props.lotecation ||
+      nextProps.userLocation !== this.props.userLocation;
   }
 
   render() {
