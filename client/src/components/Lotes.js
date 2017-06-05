@@ -52,7 +52,7 @@ class Lotes extends React.Component {
               <label>
                 <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
               </label>
-              <RaisedButton labelColor='white' backgroundColor='#48d09b' className="submitButton" label="Create New Lote" onTouchTap={ this.handleSubmit }/>
+              <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Create New Lote" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
         }
