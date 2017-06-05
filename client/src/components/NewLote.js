@@ -94,7 +94,7 @@ class NewLote extends React.Component {
               <Checkbox label='Location-Locked' style={{width: 'initial', margin: 'auto', paddingRight: 12}} labelStyle={{width: 'initial'}} checked={ this.state.lock } onCheck={ this.handleLockToggle } />
             </div>
             <div>
-              <RaisedButton labelColor='white' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
+              <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
             </div>
           </form>
 
