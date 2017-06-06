@@ -1,4 +1,5 @@
 import store from './store';
+import socket from './socket';
 
 let success = (pos) => {
   store.dispatch({
