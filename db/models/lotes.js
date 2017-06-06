@@ -1,4 +1,5 @@
 const db = require('../');
+const Location = require('./locations');
 
 const Lote_Sent = db.Model.extend({
   tableName: 'lotes_sent',
@@ -7,6 +8,9 @@ const Lote_Sent = db.Model.extend({
   },
   lote: function() {
     return this.morphTo('lote', Lote_Text, Lote_Audio);
+  },
+  location: function() {
+    return this.belongsTo('Location');
   }
 });
 
