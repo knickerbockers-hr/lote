@@ -1,4 +1,6 @@
 const models = require('../../db/models');
+const db = require('../../db');
+const Promise = require('bluebird');
 
 module.exports.getAll = (req, res) => {
   console.log ('getting all lotes');
@@ -36,8 +38,9 @@ module.exports.getAllForProfile = (req, res) => {
   // ALL lotes sent OR received by logged-in user
   models.Lote.Lote_Sent
     .query('join', 'lotes_received', 'lotes_sent.id', 'lotes_received.lotes_sent_id')
+    .query('join', 'locations', 'lotes_sent.location_id', 'locations.id')
     .query({ where: { 'lotes_sent.sender_id': req.params.profileId }, orWhere: { 'lotes_received.receiver_id': req.params.profileId }, orderBy: 'id' })
-    .fetchAll({withRelated: ['lotesReceived', 'lote']})
+    .fetchAll({withRelated: ['lotesReceived', 'lote', 'location']})
 
     .then(lotes => {
       // console.log ('lotes', lotes);
@@ -52,50 +55,51 @@ module.exports.getAllForProfile = (req, res) => {
 
 
 module.exports.create = (req, res) => {
-  console.log ('creating lote');
-  if (req.body.loteType === 'lotes_text') {
-    models.Lote.Lote_Text.forge({ message: req.body.message })
-      .save()
-      .error(err => {
-        console.error('ERROR: failed to create lote text');
-        throw err;
-      })
-      .then(result => {
-        console.log ('lote text created');
-        return models.Lote.Lote_Sent
-          .forge({
-            sender_id: req.body.senderId,
-            lote_type: req.body.loteType,
-            lote_id: result.id,
-            lock: req.body.lock
-          })
-          .save();
-      })
-      .error(err => {
-        console.error('ERROR: failed to create lote sent');
-        throw err;
-      })
-      .then(result => {
-        console.log ('lote received created');
-        return models.Lote.Lote_Received
-          .forge({
-            lotes_sent_id: result.id,
-            receiver_id: req.body.receiverId
-          })
-          .save();
-      })
-      .error(err => {
-        console.error('ERROR: failed to create lote received');
-        throw err;
-      })
-      .then(result => {
-        console.log ('lote created successfully');
-        res.status(201).send(result);
-      })
-      .catch(err => {
-        res.status(500).send(err);
-      });
-  }
+  return db.transaction((transaction) => {
+
+    if (req.body.loteType !== 'lotes_text') {
+      throw `unsupported lote type: ${req.body.loteType}`;
+    }
+
+    let lote = models.Lote.Lote_Text.forge({
+      message: req.body.message
+    })
+    .save(null, {transacting: transaction});
+
+    let location = models.Location.forge({
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
+    })
+    .save(null, {transacting: transaction});
+
+    return Promise.all([lote, location])
+    .then(([lote, location]) => {
+      return models.Lote.Lote_Sent
+        .forge({
+          'sender_id': req.body.senderId,
+          'lote_type': req.body.loteType,
+          'lote_id': lote.id,
+          'lock': req.body.lock,
+          'location_id': location.id
+        })
+        .save(null, {transacting: transaction});
+    })
+    .then(loteSent => {
+      return models.Lote.Lote_Received
+        .forge({
+          'lotes_sent_id': loteSent.id,
+          'receiver_id': req.body.receiverId
+        })
+        .save(null, {transacting: transaction});
+    });
+  })
+  .then(result => {
+    res.status(201).send(result);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).send(err);
+  });
 };
 
 // module.exports.getOne = (req, res) => {

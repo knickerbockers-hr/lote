@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const Location = db.Model.extend({
   tableName: 'locations',
   lotes_sent: function() {
-    return this.hasMany(Lote_Sent);
+    return this.hasMany('Lote_Sent');
   }
 });
 

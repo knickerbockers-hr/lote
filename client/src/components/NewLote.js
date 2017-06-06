@@ -49,13 +49,14 @@ class NewLote extends React.Component {
       receiverId: this.props.activeContact.id,
       loteType: 'lotes_text',
       message: this.props.activeMessage,
-      lock: this.state.lock
+      lock: this.state.lock,
+      longitude: this.props.lotecation.lng(),
+      latitude: this.props.lotecation.lat()
     })
     .then((res) => {
       this.props.setActiveMessage('');
       this.props.getLotes(this.props.profile.id);
       this.props.history.push('/lotes');
-      console.log (res);
     })
     .catch((err) => {
       console.log (err);
