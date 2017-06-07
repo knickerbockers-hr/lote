@@ -42,10 +42,13 @@ export const getLotes = (userId) => {
         console.log ('received lotes', lotes);
         dispatch(addLotesToStore(lotes));
         locationTree.clear();
+        // load points into r-tree
         locationTree.load(lotes.map((lote) => {
           const {longitude, latitude} = lote.location;
           let point = new geopoint(latitude, longitude);
-          let radius = lote.radius || 1;
+          // default radius half a mile until we have
+          // radius on all lotes
+          let radius = lote.radius || 0.5;
           let bbox = point.boundingCoordinates(radius, true);
           return {
             minX: bbox[0].longitude(),

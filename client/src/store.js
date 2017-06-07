@@ -12,11 +12,13 @@ let defaultState = {
   activeContact: {},
   activeMessage: '',
   lotecation: {
-    lat: () => { return 0; },
-    lng: () => { return 0; }},
+    lat: 0,
+    lng: 0
+  },
   userLocation: {
-    lat: () => { return 0; },
-    lng: () => { return 0; }}
+    lat: 0,
+    lng: 0
+  }
 }; // we need a reducer for each state
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

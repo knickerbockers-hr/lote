@@ -51,8 +51,8 @@ class NewLote extends React.Component {
       loteType: 'lotes_text',
       message: this.props.activeMessage,
       lock: this.state.lock,
-      longitude: this.props.lotecation.lng(),
-      latitude: this.props.lotecation.lat()
+      longitude: this.props.lotecation.lng || this.props.userLocation.lng,
+      latitude: this.props.lotecation.lat || this.props.userLocation.lat
     })
     .then((res) => {
       this.props.setActiveMessage('');

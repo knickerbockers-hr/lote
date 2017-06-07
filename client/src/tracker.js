@@ -7,8 +7,8 @@ let success = (pos) => {
   store.dispatch({
     type: 'UPDATE_USER_LOCATION',
     payload: {
-      lat: () => { return pos.coords.latitude; },
-      lng: () => { return pos.coords.longitude; }
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude
     }
   });
 

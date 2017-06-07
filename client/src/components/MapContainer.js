@@ -26,7 +26,8 @@ class WrappedMap extends React.Component {
   }
 
   centerMoved(mapProps, map) {
-    this.props.updateLotecation(map.getCenter());
+    let location = map.getCenter();
+    this.props.updateLotecation({lat: location.lat(), lng: location.lng()});
   }
 
   onSubmit(event) {
@@ -38,7 +39,6 @@ class WrappedMap extends React.Component {
     const {google, map} = this.props;
 
     if (!google || !map) { return; }
-    //console.log(this.refs);
     const aref = this.props.autocomplete;
     //const aref = this.refs.autocomplete;
     const node = ReactDOM.findDOMNode(aref);
@@ -59,7 +59,7 @@ class WrappedMap extends React.Component {
       }
 
       let {lat, lng} = place.geometry.location;
-      this.props.updateLotecation(place.geometry.location);
+      this.props.updateLotecation({lat: lat(), lng: lng()});
     });
 
     this.autocomplete = autocomplete;
@@ -71,16 +71,6 @@ class WrappedMap extends React.Component {
     if (!this.props.loaded) {
       return (
         <div className="container-fluid">
-          {/*<form>
-            <input
-              type="text"
-              ref="autocomplete"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
-            </form>*/}
           <div
             style={{
               position: 'relative',
@@ -100,8 +90,8 @@ class WrappedMap extends React.Component {
               height: '100%',
               width: '100%'
             }}
-            center={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
-            initialCenter={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
+            center={{lat: lotecation.lat || userLocation.lat, lng: lotecation.lng || userLocation.lng}}
+            initialCenter={{lat: lotecation.lat || userLocation.lat, lng: lotecation.lng || userLocation.lng}}
             onDragend={this.centerMoved}
           >
           </Map>
@@ -111,25 +101,11 @@ class WrappedMap extends React.Component {
             transform: 'translate(0%, -100%)'
           }}
             src={'../assets/location-icon.png'}></img>
-          {/*<form onSubmit={this.onSubmit} style={{
-            position: 'absolute',
-            left: '0px',
-            top: '10%'
-          }}>
-            <input
-              ref="autocomplete"
-              type="text"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
-            </form>*/}
             <span style={{
               position: 'absolute',
               right: '0px',
               top: '10%'
-            }}> {lotecation.lat() || userLocation.lat()}, {lotecation.lng() || userLocation.lng()} </span>
+            }}> {lotecation.lat || userLocation.lat}, {lotecation.lng || userLocation.lng} </span>
         </div>
       );
     }
