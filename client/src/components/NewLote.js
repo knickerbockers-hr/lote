@@ -27,7 +27,6 @@ class NewLote extends React.Component {
 
   componentWillMount() {
     this.props.setActivePage('New Lote');
-
   }
 
   handleRecipientChange (event, index, receiverId) {

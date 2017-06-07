@@ -19,8 +19,10 @@ class WrappedMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {google, map} = this.props;
+    const {google, map, autocomplete} = this.props;
     if (map !== prevProps.map) {
+      this.renderAutoComplete();
+    } else if (autocomplete !== prevProps.autocomplete) {
       this.renderAutoComplete();
     }
   }
