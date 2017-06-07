@@ -9,10 +9,10 @@ const makeSockets = (server) => {
 
   io.on('connection', function (socket) {
 
-    socket.on('location update', function (data) {
-      console.log(this.request.session);
-      console.log('data: ', data);
-    });
+    // socket.on('location update', function (data) {
+    //   console.log(this.request.session.passport);
+    //   console.log('data: ', data);
+    // });
 
     socket.on('disconnect', () => {
       console.log('disconnect event');
