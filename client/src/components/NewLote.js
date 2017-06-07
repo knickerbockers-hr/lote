@@ -101,7 +101,11 @@ class NewLote extends React.Component {
             {this.props.contacts.map((contact, i) => {
               return (
                 contact.receiver_id !== this.props.profile.id &&
-                  <MenuItem key={ i + 1 } value={ contact.receiver } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
+                  <MenuItem 
+                  key={ i + 1 } 
+                  value={ contact.receiver } 
+                  primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }
+                  />
               );
             })}
           </DropDownMenu>
@@ -123,10 +127,22 @@ class NewLote extends React.Component {
               
             </div>
             <div>
-              <Checkbox label='Location-Locked' style={{width: 'initial', margin: 'auto', paddingRight: 12}} labelStyle={{width: 'initial'}} checked={ this.state.lock } onCheck={ this.handleLockToggle } />
+              <Checkbox 
+                label='Location-Locked' 
+                style={{width: 'initial', margin: 'auto', paddingRight: 12}} 
+                labelStyle={{width: 'initial'}} 
+                checked={ this.state.lock } 
+                onCheck={ this.handleLockToggle } 
+              />
             </div>
             <div>
-              <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
+              <RaisedButton 
+                labelColor='#ffffff' 
+                backgroundColor='#48d09b' 
+                className="submitButton" 
+                label="Submit" 
+                onTouchTap={ this.handleSubmit }
+              />
             </div>
           </form>
         </Card>
