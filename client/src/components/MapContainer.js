@@ -40,9 +40,8 @@ class WrappedMap extends React.Component {
 
     const {google, map} = this.props;
 
-    if (!google || !map) { return; }
+    if (!google || !map || !this.props.autocomplete) { return; }
     const aref = this.props.autocomplete;
-    //const aref = this.refs.autocomplete;
     const node = ReactDOM.findDOMNode(aref);
     var autocomplete = new google.maps.places.Autocomplete(node);
     autocomplete.bindTo('bounds', map);

@@ -21,6 +21,8 @@ class NewLote extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.placeSubmit = this.placeSubmit.bind(this);
+    this.placeSearch = this.placeSearch.bind(this);
+    this.placeRef = this.placeRef.bind(this);
     this.handleLockToggle = this.handleLockToggle.bind(this);
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
   }
@@ -63,8 +65,17 @@ class NewLote extends React.Component {
     });
   }
 
+  placeRef(ref) {
+    this.autocomplete = ref ? ref.input : null;
+  }
+
   placeSubmit(event) {
     event.preventDefault();
+    console.log('submit');
+  }
+
+  placeSearch(event) {
+    console.log('hello');
   }
 
   render() {
@@ -75,7 +86,7 @@ class NewLote extends React.Component {
       lotecation: p.lotecation,
       userLocation: p.userLocation,
       updateLotecation: p.updateLotecation,
-      autocomplete: this.refs.autocomplete
+      autocomplete: this.autocomplete
     };
     return (
       <div className={'newLoteContainer'}>
@@ -83,17 +94,16 @@ class NewLote extends React.Component {
         <Card style={{
           width: '40%'
         }}>
-          <form onSubmit={this.placeSubmit} className="lote-form">
-            <input
-              type="text"
-              ref="autocomplete"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
+
+          <form className="lote-form" onSubmit={this.placeSubmit}>
+            <TextField id="locationSearch"
+              ref={this.placeRef}
+            />
+            <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
           </form>
+
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
+
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (
