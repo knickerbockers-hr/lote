@@ -1,4 +1,5 @@
 import store from './store';
+import socket from './socket';
 
 let success = (pos) => {
   store.dispatch({
@@ -7,6 +8,11 @@ let success = (pos) => {
       lat: () => { return pos.coords.latitude; },
       lng: () => { return pos.coords.longitude; }
     }
+  });
+  console.log(pos.coords);
+  socket.emit('location update', {
+    lat: pos.coords.latitude,
+    lng: pos.coords.longitude
   });
 };
 

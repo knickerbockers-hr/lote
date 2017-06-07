@@ -19,7 +19,7 @@ let storeOptions = process.env.REDIS_URL ?
 
 module.exports.session = session({
   store: new RedisStore(storeOptions),
-  secret: 'more laughter, more love, more life',
+  secret: process.env.SESSION_SECRET || 'more laughter, more love, more life',
   resave: false,
   saveUninitialized: false
 });

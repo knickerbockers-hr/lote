@@ -27,4 +27,5 @@ app.get('*', (req, res) => {
   res.render('index', {user: req.user, url: req.originalUrl});
 });
 
+
 module.exports = app;

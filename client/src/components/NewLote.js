@@ -20,6 +20,7 @@ class NewLote extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.placeSubmit = this.placeSubmit.bind(this);
     this.handleLockToggle = this.handleLockToggle.bind(this);
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
   }
@@ -80,10 +81,10 @@ class NewLote extends React.Component {
     return (
       <div className={'newLoteContainer'}>
         <MapContainer {...mapProps} />
-        <Card className={'hithere'} style={{
+        <Card style={{
           width: '40%'
         }}>
-          <form className="lote-form">
+          <form onSubmit={this.placeSubmit} className="lote-form">
             <input
               type="text"
               ref="autocomplete"
