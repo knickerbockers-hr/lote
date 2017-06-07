@@ -8,10 +8,14 @@ const makeSockets = (server) => {
   });
 
   io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    console.log(socket.request.session);
-    socket.on('my other event', function (data) {
-      console.log(data);
+
+    socket.on('location update', function (data) {
+      console.log(this.request.session);
+      console.log('data: ', data);
+    });
+
+    socket.on('disconnect', () => {
+      console.log('disconnect event');
     });
   });
 };

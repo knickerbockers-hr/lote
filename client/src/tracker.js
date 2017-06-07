@@ -9,7 +9,11 @@ let success = (pos) => {
       lng: () => { return pos.coords.longitude; }
     }
   });
-
+  console.log(pos.coords);
+  socket.emit('location update', {
+    lat: pos.coords.latitude,
+    lng: pos.coords.longitude
+  });
 };
 
 let error = (err) => {
