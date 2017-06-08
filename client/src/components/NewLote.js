@@ -21,13 +21,14 @@ class NewLote extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.placeSubmit = this.placeSubmit.bind(this);
+    this.placeSearch = this.placeSearch.bind(this);
+    this.placeRef = this.placeRef.bind(this);
     this.handleLockToggle = this.handleLockToggle.bind(this);
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
   }
 
   componentWillMount() {
     this.props.setActivePage('New Lote');
-
   }
 
   handleRecipientChange (event, index, receiverId) {
@@ -51,8 +52,8 @@ class NewLote extends React.Component {
       loteType: 'lotes_text',
       message: this.props.activeMessage,
       lock: this.state.lock,
-      longitude: this.props.lotecation.lng(),
-      latitude: this.props.lotecation.lat()
+      longitude: this.props.lotecation.lng || this.props.userLocation.lng,
+      latitude: this.props.lotecation.lat || this.props.userLocation.lat
     })
     .then((res) => {
       this.props.setActiveMessage('');
@@ -64,8 +65,17 @@ class NewLote extends React.Component {
     });
   }
 
+  placeRef(ref) {
+    this.searchBox = ref ? ref.input : null;
+  }
+
   placeSubmit(event) {
     event.preventDefault();
+    console.log(event);
+  }
+
+  placeSearch(event) {
+    console.log('hello');
   }
 
   render() {
@@ -76,7 +86,7 @@ class NewLote extends React.Component {
       lotecation: p.lotecation,
       userLocation: p.userLocation,
       updateLotecation: p.updateLotecation,
-      autocomplete: this.refs.autocomplete
+      searchBox: this.searchBox
     };
     return (
       <div className={'newLoteContainer'}>
@@ -84,17 +94,16 @@ class NewLote extends React.Component {
         <Card style={{
           width: '40%'
         }}>
-          <form onSubmit={this.placeSubmit} className="lote-form">
-            <input
-              type="text"
-              ref="autocomplete"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
+
+          <form className="lote-form" onSubmit={this.placeSubmit}>
+            <TextField id="locationSearch"
+              ref={this.placeRef}
+            />
+            <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
           </form>
+
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
+
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (

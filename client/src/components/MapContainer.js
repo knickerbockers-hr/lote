@@ -7,46 +7,52 @@ class WrappedMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.autocomplete = {getPlace: () => {
-      console.log('Autocomplete not loaded');
+    this.searchBox = {getPlace: () => {
+      console.log('searchBox not loaded');
     }};
     this.onSubmit = this.onSubmit.bind(this);
     this.centerMoved = this.centerMoved.bind(this);
   }
 
   componentDidMount() {
-    this.renderAutoComplete();
+    this.renderSearchBox();
   }
 
   componentDidUpdate(prevProps) {
-    const {google, map} = this.props;
+    const {google, map, searchBox} = this.props;
     if (map !== prevProps.map) {
-      this.renderAutoComplete();
+      this.renderSearchBox();
+    } else if (searchBox !== prevProps.searchBox) {
+      this.renderSearchBox();
     }
   }
 
   centerMoved(mapProps, map) {
-    this.props.updateLotecation(map.getCenter());
+    let location = map.getCenter();
+    this.props.updateLotecation({lat: location.lat(), lng: location.lng()});
   }
 
   onSubmit(event) {
     event.preventDefault();
   }
 
-  renderAutoComplete() {
+  renderSearchBox() {
 
     const {google, map} = this.props;
 
-    if (!google || !map) { return; }
-    //console.log(this.refs);
-    const aref = this.props.autocomplete;
-    //const aref = this.refs.autocomplete;
+    if (!google || !map || !this.props.searchBox) { return; }
+    const aref = this.props.searchBox;
     const node = ReactDOM.findDOMNode(aref);
-    var autocomplete = new google.maps.places.Autocomplete(node);
-    autocomplete.bindTo('bounds', map);
+    console.log('node: ', node);
+    const searchBox = new google.maps.places.SearchBox(node);
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
 
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
+    searchBox.addListener('places_changed', () => {
+      const places = searchBox.getPlaces();
+      const place = places[0];
+
       if (!place.geometry) {
         return;
       }
@@ -59,10 +65,10 @@ class WrappedMap extends React.Component {
       }
 
       let {lat, lng} = place.geometry.location;
-      this.props.updateLotecation(place.geometry.location);
+      this.props.updateLotecation({lat: lat(), lng: lng()});
     });
 
-    this.autocomplete = autocomplete;
+    this.searchBox = searchBox;
   }
 
   render() {
@@ -71,16 +77,6 @@ class WrappedMap extends React.Component {
     if (!this.props.loaded) {
       return (
         <div className="container-fluid">
-          {/*<form>
-            <input
-              type="text"
-              ref="autocomplete"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
-            </form>*/}
           <div
             style={{
               position: 'relative',
@@ -100,8 +96,8 @@ class WrappedMap extends React.Component {
               height: '100%',
               width: '100%'
             }}
-            center={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
-            initialCenter={{lat: lotecation.lat() || userLocation.lat(), lng: lotecation.lng() || userLocation.lng()}}
+            center={{lat: lotecation.lat || userLocation.lat, lng: lotecation.lng || userLocation.lng}}
+            initialCenter={{lat: lotecation.lat || userLocation.lat, lng: lotecation.lng || userLocation.lng}}
             onDragend={this.centerMoved}
           >
           </Map>
@@ -111,25 +107,11 @@ class WrappedMap extends React.Component {
             transform: 'translate(0%, -100%)'
           }}
             src={'../assets/location-icon.png'}></img>
-          {/*<form onSubmit={this.onSubmit} style={{
-            position: 'absolute',
-            left: '0px',
-            top: '10%'
-          }}>
-            <input
-              ref="autocomplete"
-              type="text"
-              placeholder="Enter a location" />
-            <input
-              // className={styles.button}
-              type="submit"
-              value="Go" />
-            </form>*/}
             <span style={{
               position: 'absolute',
               right: '0px',
               top: '10%'
-            }}> {lotecation.lat() || userLocation.lat()}, {lotecation.lng() || userLocation.lng()} </span>
+            }}> {lotecation.lat || userLocation.lat}, {lotecation.lng || userLocation.lng} </span>
         </div>
       );
     }

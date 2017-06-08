@@ -1,1 +1,0 @@
-IOS client files, React Native code, etc. These are excluded from Heroku since we will be distributing from a separate channel
