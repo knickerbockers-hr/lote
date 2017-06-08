@@ -10,8 +10,14 @@ import MapContainer from './MapContainer';
 import { Card, CardMedia } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 
-class NewLote extends React.Component {
+import socket from '../socket'; 
 
+//component did mount: socket.on('receive message')
+//store message
+//set new state on messages
+//map out messages
+
+class NewLote extends React.Component {
   constructor(props) {
     super(props);
 
@@ -33,6 +39,10 @@ class NewLote extends React.Component {
     this.props.setActivePage('New Lote');
   }
 
+  handleRecipientChange (event, index, receiverId) {
+    this.setState({ receiverId });
+  }
+
   handleRecipientChange (event, index, receiver) {
     this.props.setActiveContact(receiver);
   }
@@ -46,8 +56,9 @@ class NewLote extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
+    event.preventDefault(); 
+
+    let loteInfo = {
       senderId: this.props.profile.id,
       receiverId: this.props.activeContact.id,
       loteType: 'lotes_text',
@@ -56,15 +67,31 @@ class NewLote extends React.Component {
       lock: this.state.lock,
       longitude: this.props.lotecation.lng || this.props.userLocation.lng,
       latitude: this.props.lotecation.lat || this.props.userLocation.lat
-    })
-    .then((res) => {
-      this.props.setActiveMessage('');
-      this.props.getLotes(this.props.profile.id);
-      this.props.history.push('/lotes');
-    })
-    .catch((err) => {
-      console.log (err);
-    });
+    }
+
+    this.props.setActiveMessage('');
+    this.props.getLotes(this.props.profile.id);
+    this.props.history.push('/lotes');
+
+    socket.emit('send message', loteInfo); 
+
+    // axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
+    //   senderId: this.props.profile.id,
+    //   receiverId: this.props.activeContact.id,
+    //   loteType: 'lotes_text',
+    //   message: this.props.activeMessage,
+    //   lock: this.state.lock,
+    //   longitude: this.props.lotecation.lng(),
+    //   latitude: this.props.lotecation.lat()
+    // })
+    // .then((res) => {
+    //   this.props.setActiveMessage('');
+    //   this.props.getLotes(this.props.profile.id);
+    //   this.props.history.push('/lotes');
+    // })
+    // .catch((err) => {
+    //   console.log (err);
+    // });
   }
 
   placeRef(ref) {

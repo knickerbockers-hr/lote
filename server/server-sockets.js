@@ -1,4 +1,5 @@
 const middleware = require('./middleware');
+const controller = require('./controllers/lotes'); 
 
 const makeSockets = (server) => {
   const io = require('socket.io')(server);
@@ -17,7 +18,18 @@ const makeSockets = (server) => {
     socket.on('disconnect', () => {
       console.log('disconnect event');
     });
+
+    socket.on('send message', function(data) {
+      console.log('DATA RECEIVED ON SERVER SIDE'); 
+      console.log('Data for New Lote Created: ', data); 
+      
+      io.sockets.emit('new message', { message: data }); 
+    });
+
+    
   });
+   
 };
 
 module.exports = makeSockets;
+

@@ -6,8 +6,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Place from 'material-ui-icons/Place';
 import Moment from 'moment';
 
-class Lotes extends React.Component {
+import io from 'socket.io-client';
+let socket = io.connect(); 
 
+class Lotes extends React.Component {
   constructor(props) {
     super(props);
 
@@ -26,6 +28,11 @@ class Lotes extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.history.push('/lotes/new');
+    
+    socket.on('new message', function(data) {
+      
+      console.log('IN SOCKET NEW MESSAGE ', data.message); 
+    });
   }
 
   render() {
@@ -37,10 +44,13 @@ class Lotes extends React.Component {
           { !this.props.activeContact.email && 'No Contact Selected'}
         </h1>
         <div className="chat">
+
           { (this.props.activeContact.id !== this.props.profile.id)
               ? this.props.lotes.map((lote, i) => {
+                
                 if (lote.sender_id === this.props.activeContact.id || lote.lotesReceived[0].receiver_id === this.props.activeContact.id) {
                   lotesDisplayCount++;
+
                   if (lote.sender_id === this.props.profile.id) {
                     return (
                       <div className="senderStyle" key={ lote.id } onClick={ () => this.handleClick(lote.id) }>
