@@ -10,13 +10,13 @@ import App from './components/App';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const router = (
-<MuiThemeProvider>
-  <Provider store={ store }>
-    <BrowserRouter>
-      <Route path='/' component={ App } />
-    </BrowserRouter>
-  </Provider>
-</MuiThemeProvider>
+  <MuiThemeProvider>
+    <Provider store={ store }>
+      <BrowserRouter>
+        <Route path='/' component={ App } />
+      </BrowserRouter>
+    </Provider>
+  </MuiThemeProvider>
 );
 
 ReactDOM.render(router, document.getElementById('root'));
