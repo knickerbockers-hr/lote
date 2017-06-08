@@ -102,13 +102,6 @@ class NewLote extends React.Component {
           width: '40%'
         }}>
 
-          <form className="lote-form" onSubmit={this.placeSubmit}>
-            <TextField id="locationSearch"
-              ref={this.placeRef}
-            />
-            <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
-          </form>
-
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
 
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
@@ -125,6 +118,16 @@ class NewLote extends React.Component {
               <label className="lote-form-label">
                 <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
               </label>
+            </div>
+
+            <form className="lote-form" onSubmit={this.placeSubmit}>
+              <TextField id="locationSearch"
+                ref={this.placeRef}
+              />
+              <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
+            </form>
+            <div>
+              RANGE
             </div>
             <div>
               <DropDownMenu ref="radius" value={this.state.radius} onChange={ this.handleRadiusChange } openImmediately={ false }>
