@@ -94,7 +94,7 @@ class NewLote extends React.Component {
               type="submit"
               value="Go" />
           </form>
-          <DropDownMenu ref="receiver" value={ this.props.activeContact.id ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
+          <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (
