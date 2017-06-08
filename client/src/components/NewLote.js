@@ -66,12 +66,12 @@ class NewLote extends React.Component {
   }
 
   placeRef(ref) {
-    this.autocomplete = ref ? ref.input : null;
+    this.searchBox = ref ? ref.input : null;
   }
 
   placeSubmit(event) {
     event.preventDefault();
-    console.log('submit');
+    console.log(event);
   }
 
   placeSearch(event) {
@@ -86,7 +86,7 @@ class NewLote extends React.Component {
       lotecation: p.lotecation,
       userLocation: p.userLocation,
       updateLotecation: p.updateLotecation,
-      autocomplete: this.autocomplete
+      searchBox: this.searchBox
     };
     return (
       <div className={'newLoteContainer'}>

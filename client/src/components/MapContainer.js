@@ -7,23 +7,23 @@ class WrappedMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.autocomplete = {getPlace: () => {
-      console.log('Autocomplete not loaded');
+    this.searchBox = {getPlace: () => {
+      console.log('searchBox not loaded');
     }};
     this.onSubmit = this.onSubmit.bind(this);
     this.centerMoved = this.centerMoved.bind(this);
   }
 
   componentDidMount() {
-    this.renderAutoComplete();
+    this.renderSearchBox();
   }
 
   componentDidUpdate(prevProps) {
-    const {google, map, autocomplete} = this.props;
+    const {google, map, searchBox} = this.props;
     if (map !== prevProps.map) {
-      this.renderAutoComplete();
-    } else if (autocomplete !== prevProps.autocomplete) {
-      this.renderAutoComplete();
+      this.renderSearchBox();
+    } else if (searchBox !== prevProps.searchBox) {
+      this.renderSearchBox();
     }
   }
 
@@ -36,18 +36,23 @@ class WrappedMap extends React.Component {
     event.preventDefault();
   }
 
-  renderAutoComplete() {
+  renderSearchBox() {
 
     const {google, map} = this.props;
 
-    if (!google || !map || !this.props.autocomplete) { return; }
-    const aref = this.props.autocomplete;
+    if (!google || !map || !this.props.searchBox) { return; }
+    const aref = this.props.searchBox;
     const node = ReactDOM.findDOMNode(aref);
-    var autocomplete = new google.maps.places.Autocomplete(node);
-    autocomplete.bindTo('bounds', map);
+    console.log('node: ', node);
+    const searchBox = new google.maps.places.SearchBox(node);
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
 
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
+    searchBox.addListener('places_changed', () => {
+      const places = searchBox.getPlaces();
+      const place = places[0];
+
       if (!place.geometry) {
         return;
       }
@@ -63,7 +68,7 @@ class WrappedMap extends React.Component {
       this.props.updateLotecation({lat: lat(), lng: lng()});
     });
 
-    this.autocomplete = autocomplete;
+    this.searchBox = searchBox;
   }
 
   render() {
