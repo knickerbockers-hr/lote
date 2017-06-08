@@ -79,6 +79,7 @@ module.exports.create = (req, res) => {
           'sender_id': req.body.senderId,
           'lote_type': req.body.loteType,
           'lote_id': lote.id,
+          'radius': req.body.radius,
           'lock': req.body.lock,
           'location_id': location.id
         })
