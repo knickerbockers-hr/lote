@@ -1,9 +1,3 @@
-//import { SEARCH } from '../actions';
-
-// const initialState = {
-//   contacts: []
-// }
-
 const contacts = (state = [], action) => {
   switch (action.type) {
   case 'CONTACTS_LIST': 
