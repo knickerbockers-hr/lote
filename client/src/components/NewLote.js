@@ -17,8 +17,7 @@ class NewLote extends React.Component {
 
     this.state = {
       lock: false,
-      radius: 90,
-      // radius: 90
+      radius: 90
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,10 +32,6 @@ class NewLote extends React.Component {
   componentWillMount() {
     this.props.setActivePage('New Lote');
   }
-
-  // handleRecipientChange (event, index, receiverId) {
-  //   this.setState({ receiverId });
-  // }
 
   handleRecipientChange (event, index, receiver) {
     this.props.setActiveContact(receiver);
@@ -126,18 +121,17 @@ class NewLote extends React.Component {
               />
               <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
             </form>
+
             <div>
               RANGE
             </div>
             <div>
               <DropDownMenu ref="radius" value={this.state.radius} onChange={ this.handleRadiusChange } openImmediately={ false }>
-
               <MenuItem value={90} primaryText='90 meters'/>
               <MenuItem value={180} primaryText='180 meters'/>
               <MenuItem value={400} primaryText='400 meters'/>
               <MenuItem value={1000} primaryText='1000 meters'/>
               <MenuItem value={2500} primaryText='2500 meters'/>
-
             </DropDownMenu>
             </div>
             <div>
