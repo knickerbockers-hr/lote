@@ -16,7 +16,8 @@ class NewLote extends React.Component {
     super(props);
 
     this.state = {
-      lock: false
+      lock: false,
+      radius: 90
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,14 +26,11 @@ class NewLote extends React.Component {
     this.placeRef = this.placeRef.bind(this);
     this.handleLockToggle = this.handleLockToggle.bind(this);
     this.handleRecipientChange = this.handleRecipientChange.bind(this);
+    this.handleRadiusChange = this.handleRadiusChange.bind(this);
   }
 
   componentWillMount() {
     this.props.setActivePage('New Lote');
-  }
-
-  handleRecipientChange (event, index, receiverId) {
-    this.setState({ receiverId });
   }
 
   handleRecipientChange (event, index, receiver) {
@@ -43,13 +41,17 @@ class NewLote extends React.Component {
     this.setState({ lock: checked });
   }
 
+  handleRadiusChange(event, index, radius) {
+    this.setState({ radius: radius});
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-
     axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
       senderId: this.props.profile.id,
       receiverId: this.props.activeContact.id,
       loteType: 'lotes_text',
+      radius: this.state.radius,
       message: this.props.activeMessage,
       lock: this.state.lock,
       longitude: this.props.lotecation.lng || this.props.userLocation.lng,
@@ -95,13 +97,6 @@ class NewLote extends React.Component {
           width: '40%'
         }}>
 
-          <form className="lote-form" onSubmit={this.placeSubmit}>
-            <TextField id="locationSearch"
-              ref={this.placeRef}
-            />
-            <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
-          </form>
-
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
 
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
@@ -118,6 +113,26 @@ class NewLote extends React.Component {
               <label className="lote-form-label">
                 <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
               </label>
+            </div>
+
+            <form className="lote-form" onSubmit={this.placeSubmit}>
+              <TextField id="locationSearch"
+                ref={this.placeRef}
+              />
+              <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
+            </form>
+
+            <div>
+              RANGE
+            </div>
+            <div>
+              <DropDownMenu ref="radius" value={this.state.radius} onChange={ this.handleRadiusChange } openImmediately={ false }>
+              <MenuItem value={90} primaryText='90 meters'/>
+              <MenuItem value={180} primaryText='180 meters'/>
+              <MenuItem value={400} primaryText='400 meters'/>
+              <MenuItem value={1000} primaryText='1000 meters'/>
+              <MenuItem value={2500} primaryText='2500 meters'/>
+            </DropDownMenu>
             </div>
             <div>
               <Checkbox label='Location-Locked' style={{width: 'initial', margin: 'auto', paddingRight: 12}} labelStyle={{width: 'initial'}} checked={ this.state.lock } onCheck={ this.handleLockToggle } />
