@@ -5,7 +5,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Place from 'material-ui-icons/Place';
 import Moment from 'moment';
-import $ from "jquery";
 import io from 'socket.io-client';
 
 class Lotes extends React.Component {
@@ -40,7 +39,7 @@ class Lotes extends React.Component {
 
           { (this.props.activeContact.id !== this.props.profile.id)
               ? this.props.lotes.map((lote, i) => {
-                
+
                 if (lote.sender_id === this.props.activeContact.id || lote.lotesReceived[0].receiver_id === this.props.activeContact.id) {
                   lotesDisplayCount++;
 
