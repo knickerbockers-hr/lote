@@ -5,16 +5,18 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      style: {
-        textAlign: 'center'
+      imageStyle: {
+        width: '100%',
+        position: 'fixed',
+        left: '0',
+        top: '0',
+        zIndex: '-1',
       },
-      image: {
-        url: 'https://cdn.pixabay.com/photo/2016/11/30/17/10/pin-1873372_960_720.png',
+      headerStyle: {
+        textAlign: 'center',
+        color: 'white',
+        marginTop: '500px',
       },
-      stretch: {
-        width: 200,
-        height: 400
-      }
     };
   }
 
@@ -25,8 +27,8 @@ class Home extends React.Component {
   render() {
     return (
       <div style={ this.state.style }>
-        <h1>Write location-based notes!</h1>
-        <img style={ this.state.stretch } src='/assets/loteimage.png'/>
+        <img style={ this.state.imageStyle } src='/assets/splash_1.jpg'/>
+        <h1 style={ this.state.headerStyle }>Lote: for location-based notes!</h1>
       </div>
     );
   }
