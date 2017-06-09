@@ -9,9 +9,9 @@ import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
 import { Card, CardMedia } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
+import socket from '../socket'; 
 
 class NewLote extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -33,6 +33,10 @@ class NewLote extends React.Component {
     this.props.setActivePage('New Lote');
   }
 
+  handleRecipientChange (event, index, receiverId) {
+    this.setState({ receiverId });
+  }
+
   handleRecipientChange (event, index, receiver) {
     this.props.setActiveContact(receiver);
   }
@@ -46,8 +50,9 @@ class NewLote extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
+    event.preventDefault(); 
+
+    let loteInfo = {
       senderId: this.props.profile.id,
       receiverId: this.props.activeContact.id,
       loteType: 'lotes_text',
@@ -56,15 +61,36 @@ class NewLote extends React.Component {
       lock: this.state.lock,
       longitude: this.props.lotecation.lng || this.props.userLocation.lng,
       latitude: this.props.lotecation.lat || this.props.userLocation.lat
-    })
-    .then((res) => {
-      this.props.setActiveMessage('');
-      this.props.getLotes(this.props.profile.id);
-      this.props.history.push('/lotes');
-    })
-    .catch((err) => {
-      console.log (err);
+    };
+    
+    socket.emit('send message', loteInfo, (err, msg) => {
+      if (err) {
+        console.log (err);
+      } else {
+        console.log (msg);
+        this.props.setActiveMessage('');
+        // this.props.getLotes(this.props.profile.id), 
+        this.props.history.push('/lotes');
+      }
     });
+
+    // axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
+    //   senderId: this.props.profile.id,
+    //   receiverId: this.props.activeContact.id,
+    //   loteType: 'lotes_text',
+    //   message: this.props.activeMessage,
+    //   lock: this.state.lock,
+    //   longitude: this.props.lotecation.lng(),
+    //   latitude: this.props.lotecation.lat()
+    // })
+    // .then((res) => {
+    //   this.props.setActiveMessage('');
+    //   this.props.getLotes(this.props.profile.id);
+    //   this.props.history.push('/lotes');
+    // })
+    // .catch((err) => {
+    //   console.log (err);
+    // });
   }
 
   placeRef(ref) {
@@ -101,7 +127,11 @@ class NewLote extends React.Component {
             {this.props.contacts.map((contact, i) => {
               return (
                 contact.receiver_id !== this.props.profile.id &&
-                  <MenuItem key={ i + 1 } value={ contact.receiver } primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }/>
+                  <MenuItem 
+                  key={ i + 1 } 
+                  value={ contact.receiver } 
+                  primaryText={ contact.receiver.display ? contact.receiver.display : contact.receiver.email }
+                  />
               );
             })}
           </DropDownMenu>
@@ -123,10 +153,22 @@ class NewLote extends React.Component {
               
             </div>
             <div>
-              <Checkbox label='Location-Locked' style={{width: 'initial', margin: 'auto', paddingRight: 12}} labelStyle={{width: 'initial'}} checked={ this.state.lock } onCheck={ this.handleLockToggle } />
+              <Checkbox 
+                label='Location-Locked' 
+                style={{width: 'initial', margin: 'auto', paddingRight: 12}} 
+                labelStyle={{width: 'initial'}} 
+                checked={ this.state.lock } 
+                onCheck={ this.handleLockToggle } 
+              />
             </div>
             <div>
-              <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Submit" onTouchTap={ this.handleSubmit }/>
+              <RaisedButton 
+                labelColor='#ffffff' 
+                backgroundColor='#48d09b' 
+                className="submitButton" 
+                label="Submit" 
+                onTouchTap={ this.handleSubmit }
+              />
             </div>
           </form>
         </Card>

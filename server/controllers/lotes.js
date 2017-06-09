@@ -53,22 +53,21 @@ module.exports.getAllForProfile = (req, res) => {
     });
 };
 
-
 module.exports.create = (req) => {
   return db.transaction((transaction) => {
 
-    if (req.body.loteType !== 'lotes_text') {
-      throw `unsupported lote type: ${req.body.loteType}`;
+    if (req.loteType !== 'lotes_text') {
+      throw `unsupported lote type: ${req.loteType}`;
     }
 
     let lote = models.Lote.Lote_Text.forge({
-      message: req.body.message
+      message: req.message
     })
     .save(null, {transacting: transaction});
 
     let location = models.Location.forge({
-      latitude: req.body.latitude,
-      longitude: req.body.longitude
+      latitude: req.latitude,
+      longitude: req.longitude
     })
     .save(null, {transacting: transaction});
 
@@ -76,11 +75,11 @@ module.exports.create = (req) => {
     .then(([lote, location]) => {
       let loteSent = models.Lote.Lote_Sent
         .forge({
-          'sender_id': req.body.senderId,
-          'lote_type': req.body.loteType,
+          'sender_id': req.senderId, //req.body.senderId,
+          'lote_type': req.loteType, //req.body.loteType,
           'lote_id': lote.id,
-          'radius': req.body.radius,
-          'lock': req.body.lock,
+          'radius': req.radius,
+          'lock': req.lock, //req.body.lock,
           'location_id': location.id
         })
         .save(null, {transacting: transaction});
@@ -88,20 +87,20 @@ module.exports.create = (req) => {
       return Promise.all([lote, location, loteSent]);
     })
     .then(([lote, location, loteSent]) => {
-      let loteRecieved = models.Lote.Lote_Received
+      let loteReceived = models.Lote.Lote_Received
         .forge({
           'lotes_sent_id': loteSent.id,
-          'receiver_id': req.body.receiverId
+          'receiver_id': req.receiverId
         })
         .save(null, {transacting: transaction});
 
-      return Promise.all([lote, location, loteSent, loteRecieved]);
+      return Promise.all([lote, location, loteSent, loteReceived]);
     })
-    .then(([lote, location, loteSent, loteRecieved]) => {
+    .then(([lote, location, loteSent, loteReceived]) => {
       lote = lote.toJSON();
       location = location.toJSON();
       loteSent = loteSent.toJSON();
-      loteRecieved = loteRecieved.toJSON();
+      loteReceived = loteReceived.toJSON();
 
       return {id: loteSent.id,
         'sender_id': loteSent.sender_id,
@@ -111,7 +110,7 @@ module.exports.create = (req) => {
         lock: loteSent.lock,
         'created_at': new Date().toISOString(),
         'updated_at': new Date().toISOString(),
-        lotesRecieved: loteRecieved,
+        lotesReceived: [loteReceived],
         lote: lote,
         location: location
       };

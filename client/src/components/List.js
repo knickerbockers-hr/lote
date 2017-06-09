@@ -35,7 +35,10 @@ class List extends React.Component {
         { !this.props.contacts ? <p>No Contacts Yet!</p>
           : this.props.contacts.map((contact, index) => {
             return (
-              <div style={ this.state.contactCardStyle } key={ index } onClick={ () => this.handleClick(contact.receiver) }>
+              <div 
+                style={ this.state.contactCardStyle } 
+                key={ index } 
+                onClick={ () => this.handleClick(contact.receiver) }>
                 { contact.receiver.display ? contact.receiver.display : contact.receiver.email }
               </div>
             );

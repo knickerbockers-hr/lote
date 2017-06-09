@@ -5,12 +5,12 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Place from 'material-ui-icons/Place';
 import Moment from 'moment';
+import $ from "jquery";
+import io from 'socket.io-client';
 
 class Lotes extends React.Component {
-
   constructor(props) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -31,16 +31,19 @@ class Lotes extends React.Component {
   render() {
     let lotesDisplayCount = 0;
     return (
-      <div className="chatContainer">
+      <div className="chatContainer" id="chat">
         <h1>
           { this.props.activeContact.display ? this.props.activeContact.display : this.props.activeContact.email }
           { !this.props.activeContact.email && 'No Contact Selected'}
         </h1>
         <div className="chat">
+
           { (this.props.activeContact.id !== this.props.profile.id)
               ? this.props.lotes.map((lote, i) => {
+                
                 if (lote.sender_id === this.props.activeContact.id || lote.lotesReceived[0].receiver_id === this.props.activeContact.id) {
                   lotesDisplayCount++;
+
                   if (lote.sender_id === this.props.profile.id) {
                     return (
                       <div className="senderStyle" key={ lote.id } onClick={ () => this.handleClick(lote.id) }>
@@ -59,6 +62,7 @@ class Lotes extends React.Component {
                     );
                   }
                 }
+
               })
               : this.props.lotes.map((lote, i) => {
                 if (lote.sender_id === this.props.profile.id && lote.lotesReceived[0].receiver_id === this.props.profile.id) {
