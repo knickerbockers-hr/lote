@@ -18,8 +18,16 @@ router.route('/:profileId')
 
 router.route('/:profileId/lotes')
   .get(LoteController.getAllForProfile)
-  .post(LoteController.create)
-  ;
+  .post((req, res) => {
+    LoteController.create(req)
+    .then(result => {
+      res.status(201).send(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
+  });
 
 router.route('/:profileId/contacts')
   .get(ContactController.getAllForProfile)

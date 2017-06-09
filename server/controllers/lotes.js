@@ -54,7 +54,7 @@ module.exports.getAllForProfile = (req, res) => {
 };
 
 
-module.exports.create = (req, res) => {
+module.exports.create = (req) => {
   return db.transaction((transaction) => {
 
     if (req.body.loteType !== 'lotes_text') {
@@ -74,7 +74,7 @@ module.exports.create = (req, res) => {
 
     return Promise.all([lote, location])
     .then(([lote, location]) => {
-      return models.Lote.Lote_Sent
+      let loteSent = models.Lote.Lote_Sent
         .forge({
           'sender_id': req.body.senderId,
           'lote_type': req.body.loteType,
@@ -84,22 +84,38 @@ module.exports.create = (req, res) => {
           'location_id': location.id
         })
         .save(null, {transacting: transaction});
+
+      return Promise.all([lote, location, loteSent]);
     })
-    .then(loteSent => {
-      return models.Lote.Lote_Received
+    .then(([lote, location, loteSent]) => {
+      let loteRecieved = models.Lote.Lote_Received
         .forge({
           'lotes_sent_id': loteSent.id,
           'receiver_id': req.body.receiverId
         })
         .save(null, {transacting: transaction});
+
+      return Promise.all([lote, location, loteSent, loteRecieved]);
+    })
+    .then(([lote, location, loteSent, loteRecieved]) => {
+      lote = lote.toJSON();
+      location = location.toJSON();
+      loteSent = loteSent.toJSON();
+      loteRecieved = loteRecieved.toJSON();
+
+      return {id: loteSent.id,
+        'sender_id': loteSent.sender_id,
+        'lote_type': loteSent.lote_type,
+        'lote_id': loteSent.lote_id,
+        radius: loteSent.radius,
+        lock: loteSent.lock,
+        'created_at': new Date().toISOString(),
+        'updated_at': new Date().toISOString(),
+        lotesRecieved: loteRecieved,
+        lote: lote,
+        location: location
+      };
     });
-  })
-  .then(result => {
-    res.status(201).send(result);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).send(err);
   });
 };
 
