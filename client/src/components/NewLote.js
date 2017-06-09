@@ -1,15 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
-import TextField from 'material-ui/TextField';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import RaisedButton from 'material-ui/RaisedButton';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import { TextField, RaisedButton, DropDownMenu, MenuItem, Card, Checkbox } from 'material-ui';
 import MapContainer from './MapContainer';
-import { Card, CardMedia } from 'material-ui/Card';
-import Checkbox from 'material-ui/Checkbox';
-import socket from '../socket';
+import socket from '../socket'; 
 
 class NewLote extends React.Component {
   constructor(props) {
@@ -95,7 +89,7 @@ class NewLote extends React.Component {
       <div className={ 'newLoteContainer' }>
         <MapContainer { ...mapProps } />
         <Card style={{
-          width: '40%'
+          width: "40%"
         }}>
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
@@ -110,36 +104,35 @@ class NewLote extends React.Component {
               );
             })}
           </DropDownMenu>
-          <form className="lote-form" ref="loteForm" onSubmit={ this.handleSubmit }>
-            <TextField hintText="Enter a message" multiLine={true} rows={1} ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
+          <form ref="loteForm" onSubmit={ this.handleSubmit }>
+            <TextField hintText="Enter a message" multiLine={ true } rows={ 1 } ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
           </form>
-          <form onSubmit={this.placeSubmit}>
-            <TextField id="locationSearch" ref={this.placeRef} hintText="Location Search" />
+          <form onSubmit={ this.placeSubmit }>
+            <TextField id="locationSearch" ref={ this.placeRef } hintText="Location search" />
           </form>
-          <div className="lote-form-label">
-            <label className="lote-form-label">Radius</label>
+          <div>
+            <label className="loteFormLabel">Radius</label>
               <DropDownMenu ref="radius" value={this.state.radius} onChange={ this.handleRadiusChange } openImmediately={ false }>
-                <MenuItem value={20} primaryText='20 meters'/>
-                <MenuItem value={100} primaryText='100 meters'/>
-                <MenuItem value={500} primaryText='500 meters'/>
-                <MenuItem value={2500} primaryText='2,500 meters'/>
-                <MenuItem value={10000} primaryText='10,000 meters'/>
+                <MenuItem value={ 20 } primaryText="20 meters"/>
+                <MenuItem value={ 100 } primaryText="100 meters"/>
+                <MenuItem value={ 500 } primaryText="500 meters"/>
+                <MenuItem value={ 2500 } primaryText="2,500 meters"/>
+                <MenuItem value={ 10000 } primaryText="10,000 meters"/>
               </DropDownMenu>
-
           </div>
           <div>
             <Checkbox
-              label='Location-Locked'
-              style={{width: 'initial', margin: 'auto', paddingRight: 12}}
-              labelStyle={{width: 'initial'}}
+              label="Location-Locked"
+              style={{ width: "initial", margin: "auto", paddingRight: 12 }}
+              labelStyle={{ width: "initial" }}
               checked={ this.state.lock }
               onCheck={ this.handleLockToggle }
             />
           </div>
           <div>
             <RaisedButton
-              labelColor='#ffffff'
-              backgroundColor='#48d09b'
+              labelColor="#ffffff"
+              backgroundColor="#48d09b"
               className="submitButton"
               label="Submit"
               onTouchTap={ this.handleSubmit }
