@@ -21,7 +21,6 @@ router.route('/:profileId/lotes')
   .post((req, res) => {
     LoteController.create(req)
     .then(result => {
-      console.log(result);
       res.status(201).send(result);
     })
     .catch(err => {
