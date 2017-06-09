@@ -20,7 +20,7 @@ class Main extends React.Component {
     this.Contacts = () => <Contacts {...this.props} />;
     this.Lotes = () => <Lotes {...this.props} />;
     this.NewLote = () => <NewLote {...this.props} />;
-    this.Lote = () => <Lote {...this.props} />;
+    this.Lote = (args) => { return (<Lote { ...this.props } { ...args.match } />); };
     this.MyProfile = () => <MyProfile {...this.props} />;
     this.Random = () => <Random {...this.props} />;
   }

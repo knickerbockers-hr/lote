@@ -16,6 +16,8 @@ const mapStateToProps = (state) => {
     activePage: state.activePage,
     activeContact: state.activeContact,
     activeMessage: state.activeMessage,
+    activeLoteId: state.activeLoteId,
+    activeLote: state.activeLote,
     userLocation: state.userLocation
   };
 };

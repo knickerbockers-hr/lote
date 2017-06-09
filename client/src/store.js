@@ -11,6 +11,8 @@ let defaultState = {
   activePage: 'Home',
   activeContact: {},
   activeMessage: '',
+  activeLoteId: '',
+  activeLote: '',
   lotecation: {
     lat: 0,
     lng: 0

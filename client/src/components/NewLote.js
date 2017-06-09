@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
-import {Card, CardMedia} from 'material-ui/Card';
+import { Card, CardMedia } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 
 class NewLote extends React.Component {
@@ -17,7 +17,7 @@ class NewLote extends React.Component {
 
     this.state = {
       lock: false,
-      radius: 90
+      radius: 20
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -91,14 +91,12 @@ class NewLote extends React.Component {
       searchBox: this.searchBox
     };
     return (
-      <div className={'newLoteContainer'}>
-        <MapContainer {...mapProps} />
+      <div className={ 'newLoteContainer' }>
+        <MapContainer { ...mapProps } />
         <Card style={{
           width: '40%'
         }}>
-
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
-
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
             {this.props.contacts.map((contact, i) => {
               return (
@@ -107,32 +105,22 @@ class NewLote extends React.Component {
               );
             })}
           </DropDownMenu>
-
           <form className="lote-form" ref="loteForm" onSubmit={ this.handleSubmit }>
-            <div>
-              <label className="lote-form-label">
-                <TextField multiLine={true} rows={1} className="lote-form-input-message" ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
-              </label>
-            </div>
-
-            <form className="lote-form" onSubmit={this.placeSubmit}>
-              <TextField id="locationSearch"
-                ref={this.placeRef}
-              />
+            <TextField hintText="Enter a message" multiLine={true} rows={1} ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
+            <form onSubmit={this.placeSubmit}>
+              <TextField id="locationSearch" ref={this.placeRef} />
               <RaisedButton labelColor='#ffffff' backgroundColor='#48d09b' className="submitButton" label="Search" type="submit" onTouchTap={ this.placeSearch }/>
             </form>
-
-            <div>
-              RANGE
-            </div>
-            <div>
-              <DropDownMenu ref="radius" value={this.state.radius} onChange={ this.handleRadiusChange } openImmediately={ false }>
-              <MenuItem value={90} primaryText='90 meters'/>
-              <MenuItem value={180} primaryText='180 meters'/>
-              <MenuItem value={400} primaryText='400 meters'/>
-              <MenuItem value={1000} primaryText='1000 meters'/>
-              <MenuItem value={2500} primaryText='2500 meters'/>
-            </DropDownMenu>
+            <div className="lote-form-label">
+              <label className="lote-form-label">Radius</label>
+                <DropDownMenu ref="radius" value={this.state.radius} onChange={ this.handleRadiusChange } openImmediately={ false }>
+                  <MenuItem value={20} primaryText='20 meters'/>
+                  <MenuItem value={100} primaryText='100 meters'/>
+                  <MenuItem value={500} primaryText='500 meters'/>
+                  <MenuItem value={2500} primaryText='2,500 meters'/>
+                  <MenuItem value={10000} primaryText='10,000 meters'/>
+                </DropDownMenu>
+              
             </div>
             <div>
               <Checkbox label='Location-Locked' style={{width: 'initial', margin: 'auto', paddingRight: 12}} labelStyle={{width: 'initial'}} checked={ this.state.lock } onCheck={ this.handleLockToggle } />
