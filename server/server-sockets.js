@@ -26,25 +26,13 @@ const makeSockets = (server) => {
       LoteController.create(data)
         .then((result) => {
           callback(null, result);
-        })
-        .then((lote) => {
-          callback(null, lote); 
-          io.sockets.emit('new message', { data: lote });
+          io.sockets.emit('new message', { data: result });
         })
         .catch((err) => {
           callback(err);
         });
-      
-      //this is sent back to Lotes.js client side and rendered to console
-      //emit lotes array instead of just new message????
-        //only receiving one message in data
-      io.sockets.emit('new message', { data: data }); 
-
     });
-
-
   });
-   
 };
 
 module.exports = makeSockets;

@@ -37,13 +37,12 @@ let newLote = (lote) => {
     type: 'ONE_LOTE', 
     lote
   });
-}
+};
 
 socket.on('new message', function(data) {
-  console.log('SOCKET RESPONSE IN TRACKER.JS COMPONENT', data); 
-  newLote(data); 
+  console.log('SOCKET RESPONSE IN TRACKER.JS', data.data); 
+  newLote(data.data); 
 });
-
 
 let error = (err) => {
   // possibly want some sort of red flag in header when tracking isn't working

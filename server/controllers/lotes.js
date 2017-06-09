@@ -87,20 +87,20 @@ module.exports.create = (req) => {
       return Promise.all([lote, location, loteSent]);
     })
     .then(([lote, location, loteSent]) => {
-      let loteRecieved = models.Lote.Lote_Received
+      let loteReceived = models.Lote.Lote_Received
         .forge({
           'lotes_sent_id': loteSent.id,
           'receiver_id': req.receiverId
         })
         .save(null, {transacting: transaction});
 
-      return Promise.all([lote, location, loteSent, loteRecieved]);
+      return Promise.all([lote, location, loteSent, loteReceived]);
     })
-    .then(([lote, location, loteSent, loteRecieved]) => {
+    .then(([lote, location, loteSent, loteReceived]) => {
       lote = lote.toJSON();
       location = location.toJSON();
       loteSent = loteSent.toJSON();
-      loteRecieved = loteRecieved.toJSON();
+      loteReceived = loteReceived.toJSON();
 
       return {id: loteSent.id,
         'sender_id': loteSent.sender_id,
@@ -110,19 +110,13 @@ module.exports.create = (req) => {
         lock: loteSent.lock,
         'created_at': new Date().toISOString(),
         'updated_at': new Date().toISOString(),
-        lotesRecieved: loteRecieved,
+        lotesReceived: [loteReceived],
         lote: lote,
         location: location
       };
     });
   });
 };
-
-
-
-
-
-
 
 // module.exports.getOne = (req, res) => {
 //   console.log ('getting one lote')

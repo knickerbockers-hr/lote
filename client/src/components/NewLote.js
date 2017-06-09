@@ -9,13 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
 import { Card, CardMedia } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
-
 import socket from '../socket'; 
-
-//component did mount: socket.on('receive message')
-//store message
-//set new state on messages
-//map out messages
 
 class NewLote extends React.Component {
   constructor(props) {
@@ -65,19 +59,8 @@ class NewLote extends React.Component {
       radius: this.state.radius,
       message: this.props.activeMessage,
       lock: this.state.lock,
-<<<<<<< HEAD
       longitude: this.props.lotecation.lng || this.props.userLocation.lng,
       latitude: this.props.lotecation.lat || this.props.userLocation.lat
-    }
-
-    this.props.setActiveMessage('');
-    this.props.getLotes(this.props.profile.id);
-    this.props.history.push('/lotes');
-
-    socket.emit('send message', loteInfo); 
-=======
-      longitude: this.props.lotecation.lng(),
-      latitude: this.props.lotecation.lat(), 
     };
     
     socket.emit('send message', loteInfo, (err, msg) => {
@@ -85,12 +68,11 @@ class NewLote extends React.Component {
         console.log (err);
       } else {
         console.log (msg);
-        this.props.setActiveMessage(''), 
-        this.props.getLotes(this.props.profile.id), 
-        this.props.history.push('/lotes')
+        this.props.setActiveMessage('');
+        // this.props.getLotes(this.props.profile.id), 
+        this.props.history.push('/lotes');
       }
     });
->>>>>>> Socket Implementation
 
     // axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
     //   senderId: this.props.profile.id,

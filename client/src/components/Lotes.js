@@ -5,11 +5,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Place from 'material-ui-icons/Place';
 import Moment from 'moment';
-
 import $ from "jquery";
-
 import io from 'socket.io-client';
-let socket = io.connect(); 
 
 class Lotes extends React.Component {
   constructor(props) {
@@ -29,11 +26,6 @@ class Lotes extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.history.push('/lotes/new');
-
-    // socket.on('new message', function(data) {
-    //   console.log('SOCKET RESPONSE IN LOTES.JS COMPONENT', data.message); 
-    //   $('#chat').append('<div class="well">'+data.message+'</div>');
-    // });
   }
 
   render() {
