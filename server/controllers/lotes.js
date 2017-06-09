@@ -40,7 +40,7 @@ module.exports.getAllForProfile = (req, res) => {
     .query('join', 'lotes_received', 'lotes_sent.id', 'lotes_received.lotes_sent_id')
     .query('join', 'locations', 'lotes_sent.location_id', 'locations.id')
     .query({ where: { 'lotes_sent.sender_id': req.params.profileId }, orWhere: { 'lotes_received.receiver_id': req.params.profileId }, orderBy: 'id' })
-    .fetchAll({withRelated: ['lotesReceived', 'lote', 'location']})
+    .fetchAll({withRelated: ['lotesReceived', 'lote', 'location', 'loteSender', 'lotesReceived.loteReceiver']})
 
     .then(lotes => {
       // console.log ('lotes', lotes);

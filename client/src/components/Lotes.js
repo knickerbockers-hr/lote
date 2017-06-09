@@ -1,7 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Place from 'material-ui-icons/Place';
+import Moment from 'moment';
 
 class Lotes extends React.Component {
 
@@ -9,6 +12,15 @@ class Lotes extends React.Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.setActivePage('Lotes');
+  }
+
+  handleClick(loteId) {
+    this.props.history.push(`/lotes/${ loteId }`);
   }
 
   handleSubmit(event) {
@@ -30,16 +42,34 @@ class Lotes extends React.Component {
                 if (lote.sender_id === this.props.activeContact.id || lote.lotesReceived[0].receiver_id === this.props.activeContact.id) {
                   lotesDisplayCount++;
                   if (lote.sender_id === this.props.profile.id) {
-                    return (<div className="senderStyle" key={lote.id}>{lote.lote.message}</div>);
+                    return (
+                      <div className="senderStyle" key={ lote.id } onClick={ () => this.handleClick(lote.id) }>
+                        <div className="loteMessage">{ lote.lote.message }</div>
+                        <div className="loteTimeStamp">sent { Moment(lote.created_at).fromNow() }</div>
+                        <Place />
+                      </div>
+                    );
                   } else if (lote.lotesReceived[0].receiver_id === this.props.profile.id) {
-                    return (<div className="receiverStyle" key={lote.id}>{lote.lote.message}</div>);
+                    return (
+                      <div className="receiverStyle" key={ lote.id } onClick={ () => this.handleClick(lote.id) }>
+                        <div className="loteMessage">{ lote.lote.message }</div>
+                        <div className="loteTimeStamp">sent { Moment(lote.created_at).fromNow() }</div>
+                        <Place />
+                      </div>
+                    );
                   }
                 }
               })
               : this.props.lotes.map((lote, i) => {
                 if (lote.sender_id === this.props.profile.id && lote.lotesReceived[0].receiver_id === this.props.profile.id) {
                   lotesDisplayCount++;
-                  return (<div className="senderStyle" key={lote.id}>{lote.lote.message}</div>);
+                  return (
+                    <div className="senderStyle" key={ lote.id } onClick={ () => this.handleClick(lote.id) }>
+                      <div className="loteMessage">{ lote.lote.message }</div>
+                      <div className="loteTimeStamp">sent { Moment(lote.created_at).fromNow() }</div>
+                      <Place />
+                    </div>
+                  );
                 }
               })
           }

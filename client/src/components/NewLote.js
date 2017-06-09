@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MapContainer from './MapContainer';
-import {Card, CardMedia} from 'material-ui/Card';
+import { Card, CardMedia } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 
 class NewLote extends React.Component {

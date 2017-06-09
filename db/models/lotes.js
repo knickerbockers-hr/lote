@@ -1,5 +1,6 @@
 const db = require('../');
 const Location = require('./locations');
+const Profile = require('./profiles');
 
 const Lote_Sent = db.Model.extend({
   tableName: 'lotes_sent',
@@ -11,6 +12,9 @@ const Lote_Sent = db.Model.extend({
   },
   location: function() {
     return this.belongsTo('Location');
+  },
+  loteSender: function() {
+    return this.belongsTo(Profile, 'sender_id');
   }
 });
 
@@ -20,6 +24,9 @@ const Lote_Received = db.Model.extend({
   tableName: 'lotes_received',
   lotesSent: function() {
     return this.belongsTo(Lote_Sent);
+  },
+  loteReceiver: function() {
+    return this.belongsTo(Profile, 'receiver_id');
   }
 });
 

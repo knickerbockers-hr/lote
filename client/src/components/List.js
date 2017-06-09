@@ -11,11 +11,13 @@ class List extends React.Component {
       contactCardStyle: {
         backgroundColor: '#eaeaea',
         borderRadius: 5,
-        marginTop: 5,
         padding: 5,
         fontFamily: 'Geneva, sans-serif',
         fontSize: '18px',
-        textAlign: 'center'
+        textAlign: 'center',
+        margin: 'auto',
+        marginTop: 5,
+        width: 300,
       },
     };
 
@@ -29,7 +31,7 @@ class List extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="newContactForm">
         { !this.props.contacts ? <p>No Contacts Yet!</p>
           : this.props.contacts.map((contact, index) => {
             return (

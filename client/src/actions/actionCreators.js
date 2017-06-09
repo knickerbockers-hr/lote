@@ -39,8 +39,14 @@ export const getLotes = (userId) => {
         throw 'request failed';
       })
       .then(function (lotes) {
-        console.log ('received lotes', lotes);
         dispatch(addLotesToStore(lotes));
+        if (state.activeLoteId) {
+          lotes.forEach(lote => {
+            if (lote.id === parseInt(state.activeLoteId)) {
+              dispatch(setActiveLote(lote));
+            }
+          });
+        }
         locationTree.clear();
         // load points into r-tree
         locationTree.load(lotes.map((lote) => {
@@ -137,5 +143,19 @@ export const setActiveMessage = (activeMessage) => {
   return {
     type: 'SET_ACTIVE_MESSAGE',
     activeMessage
+  };
+};
+
+export const setActiveLoteId = (activeLoteId) => {
+  return {
+    type: 'SET_ACTIVE_LOTE_ID',
+    activeLoteId
+  };
+};
+
+export const setActiveLote = (activeLote) => {
+  return {
+    type: 'SET_ACTIVE_LOTE',
+    activeLote
   };
 };
