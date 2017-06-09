@@ -32,6 +32,19 @@ let success = (pos) => {
   // });
 };
 
+let newLote = (lote) => {
+  store.dispatch({
+    type: 'ONE_LOTE', 
+    lote
+  });
+}
+
+socket.on('new message', function(data) {
+  console.log('SOCKET RESPONSE IN TRACKER.JS COMPONENT', data); 
+  newLote(data); 
+});
+
+
 let error = (err) => {
   // possibly want some sort of red flag in header when tracking isn't working
   // to let you know when you aren't picking up lotes

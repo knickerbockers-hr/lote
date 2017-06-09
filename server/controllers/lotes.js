@@ -53,22 +53,21 @@ module.exports.getAllForProfile = (req, res) => {
     });
 };
 
-
 module.exports.create = (req) => {
   return db.transaction((transaction) => {
 
-    if (req.body.loteType !== 'lotes_text') {
-      throw `unsupported lote type: ${req.body.loteType}`;
+    if (req.loteType !== 'lotes_text') {
+      throw `unsupported lote type: ${req.loteType}`;
     }
 
     let lote = models.Lote.Lote_Text.forge({
-      message: req.body.message
+      message: req.message
     })
     .save(null, {transacting: transaction});
 
     let location = models.Location.forge({
-      latitude: req.body.latitude,
-      longitude: req.body.longitude
+      latitude: req.latitude,
+      longitude: req.longitude
     })
     .save(null, {transacting: transaction});
 
@@ -76,11 +75,11 @@ module.exports.create = (req) => {
     .then(([lote, location]) => {
       let loteSent = models.Lote.Lote_Sent
         .forge({
-          'sender_id': req.body.senderId,
-          'lote_type': req.body.loteType,
+          'sender_id': req.senderId, //req.body.senderId,
+          'lote_type': req.loteType, //req.body.loteType,
           'lote_id': lote.id,
-          'radius': req.body.radius,
-          'lock': req.body.lock,
+          'radius': req.radius,
+          'lock': req.lock, //req.body.lock,
           'location_id': location.id
         })
         .save(null, {transacting: transaction});
@@ -91,7 +90,7 @@ module.exports.create = (req) => {
       let loteRecieved = models.Lote.Lote_Received
         .forge({
           'lotes_sent_id': loteSent.id,
-          'receiver_id': req.body.receiverId
+          'receiver_id': req.receiverId
         })
         .save(null, {transacting: transaction});
 
@@ -118,6 +117,12 @@ module.exports.create = (req) => {
     });
   });
 };
+
+
+
+
+
+
 
 // module.exports.getOne = (req, res) => {
 //   console.log ('getting one lote')
