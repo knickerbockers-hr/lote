@@ -129,6 +129,11 @@ label .lockCheck {
   font-size: 5.0em;
 }
 
+.lote-form-label {
+  vertical-align: top;
+  margin-top: 18px;
+}
+
 /*
 .lote-form {
   width: 400px;

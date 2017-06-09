@@ -33,24 +33,27 @@ class Lote extends React.Component {
       <div className={'newLoteContainer'}>
         <MapContainer {...mapProps} />
         <Card style={{ width: '40%' }}>
-            <div>Sender:
+            <div>Sender: 
               { this.props.activeLote && this.props.activeLote.loteSender.display }
             </div>
-            <div>Receiver:
+            <div>Receiver: 
               { this.props.activeLote && this.props.activeLote.lotesReceived[0].loteReceiver.display }
             </div>
-            <div>Message:
+            <div>Message: 
               { this.props.activeLote && this.props.activeLote.lote.message }
             </div>
             <div>Lotecation:
-              <span>Latitude:
+              <span>Latitude: 
                 { this.props.activeLote && this.props.activeLote.location.latitude }
               </span>
-              <span>Longitude:
+              <span>Longitude: 
                 { this.props.activeLote && this.props.activeLote.location.longitude }
               </span>
             </div>
-            <div>Sent At:
+            <div>Radius: 
+              { this.props.activeLote && this.props.activeLote.radius + ' meters'}
+            </div>
+            <div>Sent At: 
               { this.props.activeLote && this.props.activeLote.created_at }
             </div>
         </Card>
