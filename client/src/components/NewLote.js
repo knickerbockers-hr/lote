@@ -66,30 +66,10 @@ class NewLote extends React.Component {
       if (err) {
         console.log (err);
       } else {
-        console.log (msg);
         this.props.setActiveMessage('');
-        // this.props.getLotes(this.props.profile.id),
         this.props.history.push('/lotes');
       }
     });
-
-    // axios.post(`/api/profiles/${this.props.profile.id}/lotes`, {
-    //   senderId: this.props.profile.id,
-    //   receiverId: this.props.activeContact.id,
-    //   loteType: 'lotes_text',
-    //   message: this.props.activeMessage,
-    //   lock: this.state.lock,
-    //   longitude: this.props.lotecation.lng(),
-    //   latitude: this.props.lotecation.lat()
-    // })
-    // .then((res) => {
-    //   this.props.setActiveMessage('');
-    //   this.props.getLotes(this.props.profile.id);
-    //   this.props.history.push('/lotes');
-    // })
-    // .catch((err) => {
-    //   console.log (err);
-    // });
   }
 
   placeRef(ref) {
@@ -134,7 +114,7 @@ class NewLote extends React.Component {
             <TextField hintText="Enter a message" multiLine={true} rows={1} ref="message" type="text" name="message" value={ this.props.activeMessage } onChange={ (event) => this.props.setActiveMessage(event.target.value) } />
           </form>
           <form onSubmit={this.placeSubmit}>
-            <TextField id="locationSearch" ref={this.placeRef} />
+            <TextField id="locationSearch" ref={this.placeRef} hintText="Location Search" />
           </form>
           <div className="lote-form-label">
             <label className="lote-form-label">Radius</label>
