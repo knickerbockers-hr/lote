@@ -43,7 +43,6 @@ class WrappedMap extends React.Component {
     if (!google || !map || !this.props.searchBox) { return; }
     const aref = this.props.searchBox;
     const node = ReactDOM.findDOMNode(aref);
-    console.log('node: ', node);
     const searchBox = new google.maps.places.SearchBox(node);
     map.addListener('bounds_changed', function() {
       searchBox.setBounds(map.getBounds());

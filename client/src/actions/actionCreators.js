@@ -1,6 +1,12 @@
 const axios = require('axios');
-const locationTree = require('../lib/pointTree').default;
-const geopoint = require('geopoint');
+const geo = require('../lib/geo');
+
+export const addContactsToStore = (contacts) => {
+  return {
+    type: 'ADD_CONTACTS',
+    contacts
+  };
+};
 
 export const increment = () => {
   return {
@@ -26,88 +32,6 @@ export const addOneLote = (lote) => {
   return {
     type: 'ONE_LOTE',
     lote
-  };
-};
-
-export const getLotes = (userId) => {
-  console.log ('getting lotes');
-  return function(dispatch, getState) {
-    var state = getState();
-    dispatch(loadingChanged(true));
-
-    return axios.get(`/api/profiles/${userId}/lotes`)
-      .then(function (res) {
-        dispatch(loadingChanged(false));
-
-        if (res.status === 200) {
-          console.log (res);
-          return res.data;
-        }
-        throw 'request failed';
-      })
-      .then(function (lotes) {
-        dispatch(addLotesToStore(lotes));
-        if (state.activeLoteId) {
-          lotes.forEach(lote => {
-            if (lote.id === parseInt(state.activeLoteId)) {
-              dispatch(setActiveLote(lote));
-            }
-          });
-        }
-        locationTree.clear();
-        // load points into r-tree
-        locationTree.load(lotes.map((lote) => {
-          const {longitude, latitude} = lote.location;
-          let point = new geopoint(latitude, longitude);
-          // default radius half a mile until we have
-          // radius on all lotes
-          let radius = lote.radius || 0.5;
-          let bbox = point.boundingCoordinates(radius, true);
-          return {
-            minX: bbox[0].longitude(),
-            minY: bbox[0].latitude(),
-            maxX: bbox[1].longitude(),
-            maxY: bbox[1].latitude(),
-            data: lote
-          };
-        }));
-      })
-      .catch(function (err) {
-        console.log (err);
-      });
-  };
-};
-
-export const addContactsToStore = (contacts) => {
-  return {
-    type: 'ADD_CONTACTS',
-    contacts
-  };
-};
-
-export const getContacts = (userId) => {
-  console.log ('getting contacts');
-  return function(dispatch, getState) {
-    var state = getState();
-    dispatch(loadingChanged(true));
-
-    return axios.get(`/api/profiles/${userId}/contacts`)
-      .then(function (res) {
-        dispatch(loadingChanged(false));
-
-        if (res.status === 200) {
-          console.log (res);
-          return res.data;
-        }
-        throw 'request failed';
-      })
-      .then(function (contacts) {
-        console.log ('received contacts', contacts);
-        dispatch(addContactsToStore(contacts));
-      })
-      .catch(function (err) {
-        console.log (err);
-      });
   };
 };
 
@@ -166,3 +90,67 @@ export const setActiveLote = (activeLote) => {
     activeLote
   };
 };
+
+
+export const getLotes = (userId) => {
+  console.log ('getting lotes');
+  return function(dispatch, getState) {
+    var state = getState();
+    dispatch(loadingChanged(true));
+
+    return axios.get(`/api/profiles/${userId}/lotes`)
+      .then(function (res) {
+        dispatch(loadingChanged(false));
+
+        if (res.status === 200) {
+          console.log (res);
+          return res.data;
+        }
+        throw 'request failed';
+      })
+      .then(function (lotes) {
+        dispatch(addLotesToStore(lotes));
+        if (state.activeLoteId) {
+          lotes.forEach(lote => {
+            if (lote.id === parseInt(state.activeLoteId)) {
+              dispatch(setActiveLote(lote));
+            }
+          });
+        }
+        geo.Fences.clear();
+        // load points into r-tree
+        geo.Fences.load(lotes.map(geo.createGeofence));
+      })
+      .catch(function (err) {
+        console.log (err);
+      });
+  };
+};
+
+
+export const getContacts = (userId) => {
+  console.log ('getting contacts');
+  return function(dispatch, getState) {
+    var state = getState();
+    dispatch(loadingChanged(true));
+
+    return axios.get(`/api/profiles/${userId}/contacts`)
+      .then(function (res) {
+        dispatch(loadingChanged(false));
+
+        if (res.status === 200) {
+          console.log (res);
+          return res.data;
+        }
+        throw 'request failed';
+      })
+      .then(function (contacts) {
+        console.log ('received contacts', contacts);
+        dispatch(addContactsToStore(contacts));
+      })
+      .catch(function (err) {
+        console.log (err);
+      });
+  };
+};
+

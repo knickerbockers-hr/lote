@@ -1,8 +1,23 @@
 import store from './store';
 import socket from './socket';
-import pointTree from './lib/pointTree';
+import {Fences, createGeofence} from './lib/geo';
 import geopoint from 'geopoint';
 
+// Listen for new lotes after initial data grab
+let newLote = (lote) => {
+  store.dispatch({
+    type: 'ONE_LOTE',
+    lote
+  });
+};
+
+socket.on('new message', function(data) {
+  console.log('SOCKET RESPONSE IN TRACKER.JS', data.data);
+  Fences.insert(createGeofence(data.data));
+  newLote(data.data);
+});
+
+// Start location tracking in background
 let success = (pos) => {
   store.dispatch({
     type: 'UPDATE_USER_LOCATION',
@@ -15,7 +30,7 @@ let success = (pos) => {
   let location = new geopoint(pos.coords.latitude, pos.coords.longitude);
   let bbox = location.boundingCoordinates(.01, true);
 
-  let triggeredLotes = pointTree.search({
+  let triggeredLotes = Fences.search({
     minX: bbox[0].longitude(),
     minY: bbox[0].latitude(),
     maxX: bbox[1].longitude(),
@@ -25,24 +40,8 @@ let success = (pos) => {
   console.log('lotes in range: ', triggeredLotes.map((lote) => {
     return lote.data;
   }));
-
-  // socket.emit('location update', {
-  //   lat: pos.coords.latitude,
-  //   lng: pos.coords.longitude
-  // });
 };
 
-let newLote = (lote) => {
-  store.dispatch({
-    type: 'ONE_LOTE', 
-    lote
-  });
-};
-
-socket.on('new message', function(data) {
-  console.log('SOCKET RESPONSE IN TRACKER.JS', data.data); 
-  newLote(data.data); 
-});
 
 let error = (err) => {
   // possibly want some sort of red flag in header when tracking isn't working

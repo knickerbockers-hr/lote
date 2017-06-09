@@ -75,11 +75,11 @@ module.exports.create = (req) => {
     .then(([lote, location]) => {
       let loteSent = models.Lote.Lote_Sent
         .forge({
-          'sender_id': req.senderId, //req.body.senderId,
-          'lote_type': req.loteType, //req.body.loteType,
+          'sender_id': req.senderId,
+          'lote_type': req.loteType,
           'lote_id': lote.id,
           'radius': req.radius,
-          'lock': req.lock, //req.body.lock,
+          'lock': req.lock,
           'location_id': location.id
         })
         .save(null, {transacting: transaction});
