@@ -1,6 +1,8 @@
 import React from 'react';
 import MapContainer from './MapContainer';
 import Card from 'material-ui/Card';
+import Forward from 'material-ui-icons/Forward';
+import Moment from 'moment';
 
 class Lote extends React.Component {
   componentWillMount() {
@@ -33,29 +35,27 @@ class Lote extends React.Component {
       <div className={'newLoteContainer'}>
         <MapContainer {...mapProps} />
         <Card style={{ width: '40%' }}>
-            <div>Sender: 
+          <div className="chat">
+            <div className="loteDisplay">
               { this.props.activeLote && this.props.activeLote.loteSender.display }
-            </div>
-            <div>Receiver: 
+              <Forward className="forward" />
               { this.props.activeLote && this.props.activeLote.lotesReceived[0].loteReceiver.display }
             </div>
-            <div>Message: 
-              { this.props.activeLote && this.props.activeLote.lote.message }
+            <div className="loteDisplaySenderStyle">
+              <div className="loteMessage">
+                { this.props.activeLote && this.props.activeLote.lote.message }
+              </div>
+              <div className="loteTimeStamp">{ this.props.activeLote && Moment(this.props.activeLote.created_at).format('LLLL') }</div>
             </div>
-            <div>Lotecation:
-              <span>Latitude: 
-                { this.props.activeLote && this.props.activeLote.location.latitude }
+            <div className="lotecationDetails">
+              <span>
+                Lat/Lng: { this.props.activeLote && this.props.activeLote.location.latitude }/{ this.props.activeLote && this.props.activeLote.location.longitude }
               </span>
-              <span>Longitude: 
-                { this.props.activeLote && this.props.activeLote.location.longitude }
+              <span>
+                Radius: { this.props.activeLote && this.props.activeLote.radius + ' meters'}
               </span>
             </div>
-            <div>Radius: 
-              { this.props.activeLote && this.props.activeLote.radius + ' meters'}
-            </div>
-            <div>Sent At: 
-              { this.props.activeLote && this.props.activeLote.created_at }
-            </div>
+          </div>
         </Card>
       </div>
     );

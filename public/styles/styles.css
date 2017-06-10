@@ -130,3 +130,42 @@ label .lockCheck {
   margin-top: 18px;
 }
 
+.loteDisplay {
+  padding-top: 20px;
+  font-size: 1.5em;
+}
+
+.forward {
+  padding-top: 10px;
+}
+
+.loteDisplaySenderStyle {
+  background-color: #afd9e0;
+  padding: 10px;
+  position: relative;
+  margin: 15px 70px 25px 45px;
+  float: center;
+  clear: both;
+}
+
+.loteDisplaySenderStyle::after {
+  text-align: center;
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: auto;
+  right: -16px;
+  top: 5px;
+  bottom: auto;
+  border: 9.8px solid;
+  border-color: #afd9e0 transparent transparent #afd9e0;
+}
+
+.lotecationDetails {
+  padding-bottom: 15px;
+}
+
+.lotecationDetails span {
+  padding: 0px 5px;
+}
