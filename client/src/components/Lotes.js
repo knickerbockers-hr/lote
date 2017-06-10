@@ -35,7 +35,6 @@ class Lotes extends React.Component {
           { !this.props.activeContact.email && 'No Contact Selected'}
         </h1>
         <div className="chat">
-
           { (this.props.activeContact.id !== this.props.profile.id)
               ? this.props.lotes.map((lote, i) => {
 

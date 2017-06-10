@@ -15,7 +15,7 @@ class Home extends React.Component {
       headerStyle: {
         textAlign: 'center',
         color: 'white',
-        marginTop: '500px',
+        marginTop: '80px',
       },
     };
   }
