@@ -63,6 +63,20 @@ h1 {
   clear: both;
 }
 
+.receiverStyle::before {
+  text-align: center;
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -16px;
+  right: auto;
+  top: 5px;
+  bottom: auto;
+  border: 9.8px solid;
+  border-color: #ffff99 #ffff99  transparent transparent;
+}
+
 .senderStyle {
   background-color: #afd9e0;
   margin-top: 5px;
@@ -88,28 +102,14 @@ h1 {
 }
 
 .map {
-    display: block;
-    position:absolute;
-    height:auto;
-    bottom:0;
-    top:0;
-    left:0;
-    right:0;
-    z-index:-1;
-}
-
-.receiverStyle::before {
-  text-align: center;
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: -16px;
-  right: auto;
-  top: 5px;
-  bottom: auto;
-  border: 9.8px solid;
-  border-color: #ffff99 #ffff99  transparent transparent;
+  display: block;
+  position:absolute;
+  height:auto;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+  z-index:-1;
 }
 
 label .lockCheck {
@@ -125,27 +125,8 @@ label .lockCheck {
   text-align: right;
 }
 
-.placeIcon {
-  font-size: 5.0em;
-}
-
-.lote-form-label {
+.loteFormLabel {
   vertical-align: top;
   margin-top: 18px;
 }
 
-/*
-.lote-form {
-  width: 400px;
-  background-color: red;
-}
-
-label.lote-form-label {
-  width: 100%;
-  background-color: yellow;
-}
-
-.lote-form-input-message {
-  width: 100%;
-  background-color: pink;
-}*/
