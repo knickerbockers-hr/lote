@@ -10,9 +10,9 @@ let defaultState = {
   myInt: 100,
   activePage: 'Home',
   activeContact: {},
-  activeMessage: '',
-  activeLoteId: '',
-  activeLote: '',
+  activeMessage: null,
+  activeLoteId: null,
+  activeLote: null,
   lotecation: {
     lat: 0,
     lng: 0

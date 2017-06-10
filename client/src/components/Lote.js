@@ -20,6 +20,12 @@ class Lote extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log ('unmounting lote');
+    this.props.setActiveLoteId(null);
+    this.props.setActiveLote(null);
+  }
+
   render() {
     let p = this.props;
     const mapProps = {
