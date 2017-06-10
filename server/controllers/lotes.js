@@ -54,22 +54,22 @@ module.exports.getAllForProfile = (req, res) => {
 };
 
 module.exports.create = (req) => {
-  return db.transaction((transaction) => {
+  return Promise.resolve(db.transaction((transaction) => {
 
     if (req.loteType !== 'lotes_text') {
-      throw `unsupported lote type: ${req.loteType}`;
+      throw `unsupported lote type: ${ req.loteType }`;
     }
 
     let lote = models.Lote.Lote_Text.forge({
       message: req.message
     })
-    .save(null, {transacting: transaction});
+    .save(null, { transacting: transaction });
 
     let location = models.Location.forge({
       latitude: req.latitude,
       longitude: req.longitude
     })
-    .save(null, {transacting: transaction});
+    .save(null, { transacting: transaction });
 
     return Promise.all([lote, location])
     .then(([lote, location]) => {
@@ -82,7 +82,7 @@ module.exports.create = (req) => {
           'lock': req.lock,
           'location_id': location.id
         })
-        .save(null, {transacting: transaction});
+        .save(null, { transacting: transaction });
 
       return Promise.all([lote, location, loteSent]);
     })
@@ -92,29 +92,20 @@ module.exports.create = (req) => {
           'lotes_sent_id': loteSent.id,
           'receiver_id': req.receiverId
         })
-        .save(null, {transacting: transaction});
+        .save(null, { transacting: transaction });
 
-      return Promise.all([lote, location, loteSent, loteReceived]);
-    })
-    .then(([lote, location, loteSent, loteReceived]) => {
-      lote = lote.toJSON();
-      location = location.toJSON();
-      loteSent = loteSent.toJSON();
-      loteReceived = loteReceived.toJSON();
-
-      return {id: loteSent.id,
-        'sender_id': loteSent.sender_id,
-        'lote_type': loteSent.lote_type,
-        'lote_id': loteSent.lote_id,
-        radius: loteSent.radius,
-        lock: loteSent.lock,
-        'created_at': new Date().toISOString(),
-        'updated_at': new Date().toISOString(),
-        lotesReceived: [loteReceived],
-        lote: lote,
-        location: location
-      };
+      return Promise.all([loteSent, loteReceived]);
     });
+  }))
+  .then(([loteSent, loteReceived]) => {
+    return models.Lote.Lote_Sent
+      .query('join', 'lotes_received', 'lotes_sent.id', 'lotes_received.lotes_sent_id')
+      .query('join', 'locations', 'lotes_sent.location_id', 'locations.id')
+      .query({ where: { 'lotes_sent.id': loteSent.id }})
+      .fetch({withRelated: ['lotesReceived', 'lote', 'location', 'loteSender', 'lotesReceived.loteReceiver']});
+  })
+  .then((createdLote) => {
+    return createdLote;
   });
 };
 
