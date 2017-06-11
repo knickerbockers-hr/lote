@@ -10,7 +10,7 @@ let defaultState = {
   myInt: 100,
   activePage: 'Home',
   activeContact: {},
-  activeMessage: null,
+  activeMessage: '',
   activeLoteId: null,
   activeLote: null,
   lotecation: {
