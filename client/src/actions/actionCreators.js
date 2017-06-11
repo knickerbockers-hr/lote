@@ -103,7 +103,7 @@ export const getLotes = (userId) => {
         dispatch(loadingChanged(false));
 
         if (res.status === 200) {
-          console.log (res);
+          // console.log (res);
           return res.data;
         }
         throw 'request failed';
@@ -139,13 +139,12 @@ export const getContacts = (userId) => {
         dispatch(loadingChanged(false));
 
         if (res.status === 200) {
-          console.log (res);
+          // console.log (res);
           return res.data;
         }
         throw 'request failed';
       })
       .then(function (contacts) {
-        console.log ('received contacts', contacts);
         dispatch(addContactsToStore(contacts));
       })
       .catch(function (err) {
