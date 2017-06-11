@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
+const favicon = require('serve-favicon');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.get('*', (req, res) => {
   res.render('index', {user: req.user, url: req.originalUrl});
 });
 
+app.use(favicon(path.join(__dirname,'../public','assets','favicon.ico')));
 
 module.exports = app;
