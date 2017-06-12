@@ -22,6 +22,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015-native-modules": "^6.9.4",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.24.1",
@@ -62,6 +63,7 @@
     "redis": "^2.7.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "serve-favicon": "^2.4.3",
     "socket.io": "^2.0.2",
     "webpack": "^2.3.2"
   },
