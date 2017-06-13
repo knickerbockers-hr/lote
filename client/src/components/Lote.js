@@ -44,8 +44,10 @@ class Lote extends React.Component {
           <div className="chat">
             <div className="loteDisplay">
               { this.props.activeLote && this.props.activeLote.loteSender.display }
+              { (this.props.activeLote && !this.props.activeLote.loteSender.display) && this.props.activeLote.loteSender.email }
               <Forward className="forward" />
               { this.props.activeLote && this.props.activeLote.lotesReceived[0].loteReceiver.display }
+              { (this.props.activeLote && !this.props.activeLote.lotesReceived[0].loteReceiver.display) && this.props.activeLote.lotesReceived[0].loteReceiver.email }
             </div>
             <div className="loteDisplaySenderStyle">
               <div className="loteMessage">
