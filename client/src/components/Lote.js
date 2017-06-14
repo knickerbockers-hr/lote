@@ -34,7 +34,8 @@ class Lote extends React.Component {
       lotecation: p.lotecation,
       userLocation: p.userLocation,
       updateLotecation: p.updateLotecation,
-      searchBox: this.searchBox
+      searchBox: this.searchBox,
+      lotes: p.activeLote ? [p.activeLote] : p.lotes
     };
 
     return (

@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Map, {Marker, GoogleApiWrapper} from 'google-maps-react';
+import AddLocation from 'material-ui-icons/AddLocation';
+import Place from 'material-ui-icons/Place';
+import Map, {Marker, GoogleApiWrapper} from '../lib/google-maps-react';
+import toMaterialStyle from 'material-color-hash';
+
+const placeIcon = 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z';
 
 
 class WrappedMap extends React.Component {
@@ -72,7 +77,17 @@ class WrappedMap extends React.Component {
   }
 
   render() {
-    const {lotecation, userLocation} = this.props;
+    const {lotecation, userLocation, lotes} = this.props;
+    let mapCenter = {};
+    // makes sure to center on first lote sent
+    if (lotes.length === 1) {
+      console.log(lotes);
+      mapCenter.lat = lotes[0].location.latitude;
+      mapCenter.lng = lotes[0].location.longitude;
+    } else {
+      mapCenter.lat = lotecation.lat || userLocation.lat;
+      mapCenter.lng = lotecation.lng || userLocation.lng;
+    }
 
     if (!this.props.loaded) {
       return (
@@ -96,22 +111,39 @@ class WrappedMap extends React.Component {
               height: '100%',
               width: '100%'
             }}
-            center={{lat: lotecation.lat || userLocation.lat, lng: lotecation.lng || userLocation.lng}}
-            initialCenter={{lat: lotecation.lat || userLocation.lat, lng: lotecation.lng || userLocation.lng}}
+            center={mapCenter}
+            initialCenter={mapCenter}
             onDragend={this.centerMoved}
           >
+            {this.props.lotes.map((lote, index) => {
+              let color = toMaterialStyle(lote.loteSender.email);
+              return (
+                <Marker key={index}
+                position={{
+                  lat: lote.location.latitude,
+                  lng: lote.location.longitude
+                }}
+                icon={{
+                  path: placeIcon,
+                  fillColor: color.backgroundColor,
+                  fillOpacity: 1,
+                  strokeColor: color.backGroundColor
+                }}/>
+              );
+            })}
           </Map>
-          <img style={{
+          {this.props.centerTarget && <AddLocation style={{
+            height: '48px',
+            width: '48px',
             position: 'relative',
             top: '50vh',
             transform: 'translate(0%, -100%)'
-          }}
-            src={'../assets/location-icon.png'}></img>
+          }}></AddLocation>}
             <span style={{
               position: 'absolute',
               right: '0px',
               top: '10%'
-            }}> {lotecation.lat || userLocation.lat}, {lotecation.lng || userLocation.lng} </span>
+            }}> {mapCenter.lat}, mapCenter.lng} </span>
         </div>
       );
     }

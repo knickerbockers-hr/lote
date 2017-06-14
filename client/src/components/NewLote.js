@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import axios from 'axios';
 import { TextField, RaisedButton, DropDownMenu, MenuItem, Card, Checkbox } from 'material-ui';
 import MapContainer from './MapContainer';
-import socket from '../socket'; 
+import socket from '../socket';
 
 class NewLote extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class NewLote extends React.Component {
 
   placeSubmit(event) {
     event.preventDefault();
-    console.log(event);
+    console.log(this.props);
   }
 
   render() {
@@ -83,13 +83,15 @@ class NewLote extends React.Component {
       lotecation: p.lotecation,
       userLocation: p.userLocation,
       updateLotecation: p.updateLotecation,
-      searchBox: this.searchBox
+      searchBox: this.searchBox,
+      centerTarget: true,
+      lotes: p.lotes
     };
     return (
       <div className={ 'newLoteContainer' }>
         <MapContainer { ...mapProps } />
         <Card style={{
-          width: "40%"
+          width: '40%'
         }}>
           <DropDownMenu ref="receiver" value={ (this.props.activeContact.id && this.props.activeContact.id !== this.props.profile.id) ? this.props.activeContact : this.props.profile } onChange={ this.handleRecipientChange } openImmediately={ false }>
             <MenuItem value={ this.props.profile } primaryText={ this.props.profile.display + ' (Self)' }/>
