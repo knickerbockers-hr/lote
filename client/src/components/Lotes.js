@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Place from 'material-ui-icons/Place';
 import Moment from 'moment';
+import io from 'socket.io-client';
 
 class Lotes extends React.Component {
   constructor(props) {
