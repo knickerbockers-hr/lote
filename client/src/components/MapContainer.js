@@ -42,7 +42,6 @@ class WrappedMap extends React.Component {
   }
 
   renderSearchBox() {
-
     const {google, map} = this.props;
 
     if (!google || !map || !this.props.searchBox) { return; }
@@ -169,13 +168,13 @@ class MapWrapper extends React.Component {
 
     return (
       <Map google={google}
-          className={'map'}
-          visible={false}
-          containerStyle={{
-            height: '100%',
-            width: '100%'
-          }}>
-            <WrappedMap {...props} />
+        className={'map'}
+        visible={false}
+        containerStyle={{
+          height: '100%',
+          width: '100%'
+        }}>
+        <WrappedMap {...props} />
       </Map>
     );
   }
