@@ -143,7 +143,7 @@ class WrappedMap extends React.Component {
               position: 'absolute',
               right: '0px',
               top: '10%'
-            }}> {mapCenter.lat}, mapCenter.lng} </span>
+            }}> {mapCenter.lat}, {mapCenter.lng} </span>
         </div>
       );
     }
