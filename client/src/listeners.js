@@ -13,8 +13,8 @@ let newLote = (lote) => {
 
 socket.on('new message', function(data) {
   console.log('SOCKET RESPONSE IN TRACKER.JS', data.data);
-  Fences.insert(createGeofence(data.data));
   newLote(data.data);
+  Fences.insert(createGeofence(data.data));
 });
 
 // Start location tracking in background
